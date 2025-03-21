@@ -1,4 +1,9 @@
 package com.wap.web1.repository;
+import com.wap.web1.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public class UserRepository {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
 }

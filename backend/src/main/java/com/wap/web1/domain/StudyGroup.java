@@ -33,5 +33,6 @@ public class StudyGroup {
 
     private String meetingDays;
 
-    private LocalTime meetingTime;
+    @Column(length = 10)
+    private String meetingTime;
 }
