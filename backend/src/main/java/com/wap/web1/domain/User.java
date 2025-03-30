@@ -2,9 +2,7 @@ package com.wap.web1.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,7 +20,7 @@ public class User {
     @Column(unique = true, length = 255)
     private String email;
 
-    @Column(length = 255)
+    @Column(unique = true,length = 255)
     private String password;
 
     @Column(length = 20)
@@ -36,6 +34,9 @@ public class User {
 
     @Column(length = 255)
     private String oauthId;
+
+    @Column(length = 50)
+    private String role;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

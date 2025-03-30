@@ -24,5 +24,5 @@ public class StudyRanking {
     })
     private StudyMember studyMember;
 
-    private Integer rank;
+    private Integer ranking;
 }
