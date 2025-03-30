@@ -1,11 +1,7 @@
 package com.wap.web1.controller;
 
-import com.wap.web1.domain.StudyGroup;
 import com.wap.web1.dto.StudyGroupCreateDto;
-import com.wap.web1.repository.StudyGroupRepository;
 import com.wap.web1.response.Response;
-import com.wap.web1.security.CurrentUser;
-import com.wap.web1.security.CustomUserDetails;
 import com.wap.web1.service.StudyGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
