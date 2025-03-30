@@ -13,7 +13,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/studygroup/create").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         //인증 없이 허용(테스트용이니까 토큰되고나면 지워야될듯)
                         .anyRequest().authenticated()
                 )
