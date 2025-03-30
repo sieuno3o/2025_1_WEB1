@@ -65,6 +65,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/studygroup/create","/auth/join").permitAll()
                         .requestMatchers("/auth/reissue").permitAll()
                         .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/api/studygroup/create").permitAll()
+                        .requestMatchers("/api/main/{study_group_id}/join").permitAll()
                         //인증 없이 허용(테스트용이니까 토큰되고나면 지워야될듯)
                         .anyRequest().authenticated()
 
@@ -98,4 +100,3 @@ public class SecurityConfig {
         return source;
     }
 }
-

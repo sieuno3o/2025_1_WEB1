@@ -1,20 +1,24 @@
 package com.wap.web1.service;
 
 import com.wap.web1.domain.StudyGroup;
+import com.wap.web1.domain.StudyMember;
 import com.wap.web1.domain.User;
 import com.wap.web1.dto.StudyGroupCreateDto;
 import com.wap.web1.repository.StudyGroupRepository;
+import com.wap.web1.repository.StudyMemberRepository;
 import com.wap.web1.repository.UserRepository;
 import com.wap.web1.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class StudyGroupService {
     private final StudyGroupRepository studyGroupRepository;
     private final UserRepository userRepository;
-
+    private final StudyMemberRepository studyMemberRepository;
+    @Transactional
     public Response createStudyGroup(StudyGroupCreateDto dto, Long userId){
         if (studyGroupRepository.findByName(dto.getName()).isPresent()){
             throw new IllegalArgumentException("이미 존재하는 그룹명입니다.");
@@ -23,6 +27,7 @@ public class StudyGroupService {
         User leader = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("리더 유저를 찾을 수 없습니다."));
 
+        //스터디 그룹 생성
         StudyGroup group = StudyGroup.builder()
                 .name(dto.getName())
                 .maxMembers(dto.getMaxMembers())
@@ -33,6 +38,17 @@ public class StudyGroupService {
                 .build();
 
         studyGroupRepository.save(group);
+
+        //StudyMember에 리더 등록
+        StudyMember leaderMember = StudyMember.builder()
+                .studyGroup(group)
+                .user(leader)
+                .role(StudyMember.Role.LEADER)
+                .status(StudyMember.Status.ACTIVE)
+                .progress(0)
+                .build();
+
+        studyMemberRepository.save(leaderMember);
 
         return new Response("스터디 정보가 성공적으로 생성되었습니다.");
     }
