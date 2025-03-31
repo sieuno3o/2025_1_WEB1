@@ -45,6 +45,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
+        log.info("LoginFilter: Attempting authentication...");
         log.info("Attempting authentication for email: " + request.getParameter("email"));
         try{
             ObjectMapper objectMapper = new ObjectMapper();
