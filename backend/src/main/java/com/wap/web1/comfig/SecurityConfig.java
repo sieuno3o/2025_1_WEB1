@@ -75,7 +75,7 @@ public class SecurityConfig {
                         userRepository), UsernamePasswordAuthenticationFilter.class);
 
         http
-                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
+                .addFilterBefore(new JWTFilter(jwtUtil, userRepository), LoginFilter.class);
         http
                 .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), JWTFilter.class);
         http
