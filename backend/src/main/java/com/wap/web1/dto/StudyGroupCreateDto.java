@@ -15,4 +15,6 @@ public class StudyGroupCreateDto {
     private String notice;
     private String meetingDays;
     private String meetingTime;
+    private String meetingType;
+    private String department;
 }

@@ -1,5 +1,7 @@
 package com.wap.web1.controller;
 
+import com.wap.web1.comfig.CurrentUser;
+import com.wap.web1.dto.CustomUserDetails;
 import com.wap.web1.dto.StudyGroupCreateDto;
 import com.wap.web1.response.Response;
 import com.wap.web1.service.StudyGroupService;
@@ -17,13 +19,9 @@ public class StudyGroupController {
     @PostMapping("/create")
     public ResponseEntity<Response> createStudyGroup(
             @RequestBody StudyGroupCreateDto dto,
-            @RequestParam Long userId // 임시로 userId를 직접 받음 나중에 삭제할 코드
-            // POST /api/studygroup/create?userId=123이런식으로 테스트
-
-            //,@CurrentUser CustomUserDetails currentUser // 인증 완성되면 이걸로 변경
+            @CurrentUser CustomUserDetails currentUser
     ){
-        // 인증 적용 전이므로, 현재는 @RequestParam으로 받은 userId 사용
-        // Long userId = currentUser.getUser().getId(); // 인증 적용 후 이 코드로 변경
+        Long userId = currentUser.getUser().getId();
 
         Response response = studyGroupService.createStudyGroup(dto, userId);
         return ResponseEntity.ok(response);

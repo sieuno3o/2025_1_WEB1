@@ -40,6 +40,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         this.refreshRepository = refreshRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+
+        setFilterProcessesUrl("/auth/login");
     }
 
     @Override
