@@ -35,6 +35,8 @@ public class StudyGroupService {
                 .notice(dto.getNotice())
                 .meetingDays(dto.getMeetingDays())
                 .meetingTime(dto.getMeetingTime())
+                .meetingType(dto.getMeetingType())
+                .department(dto.getDepartment())
                 .build();
 
         studyGroupRepository.save(group);

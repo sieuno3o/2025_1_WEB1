@@ -35,4 +35,8 @@ public class StudyGroup {
 
     @Column(length = 10)
     private String meetingTime;
+
+    private String meetingType;
+
+    private String department;
 }
