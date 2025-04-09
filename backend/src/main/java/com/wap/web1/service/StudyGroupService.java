@@ -4,6 +4,7 @@ import com.wap.web1.domain.StudyGroup;
 import com.wap.web1.domain.StudyMember;
 import com.wap.web1.domain.User;
 import com.wap.web1.dto.GroupMembersDto;
+import com.wap.web1.dto.GroupNoticeDto;
 import com.wap.web1.dto.StudyGroupCreateDto;
 import com.wap.web1.repository.StudyGroupRepository;
 import com.wap.web1.repository.StudyMemberRepository;
@@ -79,5 +80,12 @@ public class StudyGroupService {
                 .studyGroupId(group.getId())
                 .members(memberDtos)
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public GroupNoticeDto getNotice(Long studyGroupId){
+        StudyGroup group = studyGroupRepository.findById(studyGroupId)
+                .orElseThrow(()->new IllegalArgumentException("스터디 그룹을 찾을 수 없습니다."));
+        return new GroupNoticeDto(group.getId(),group.getNotice());
     }
 }

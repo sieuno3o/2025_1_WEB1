@@ -19,7 +19,7 @@ public class StudyGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 20)
     private String name;
 
     private Integer maxMembers;
@@ -28,7 +28,7 @@ public class StudyGroup {
     @JoinColumn(name = "leader_id", nullable = false)
     private User leader;
 
-    @Lob
+    @Column(length = 1000)
     private String notice;
 
     private String meetingDays;
