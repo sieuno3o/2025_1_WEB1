@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GroupPreviewDto {
-    @JsonProperty("study_group_id")
+
     private Long studyGroupId;
 
     private String name;

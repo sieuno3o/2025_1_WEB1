@@ -3,6 +3,7 @@ package com.wap.web1.service;
 import com.wap.web1.domain.StudyGroup;
 import com.wap.web1.domain.StudyMember;
 import com.wap.web1.domain.User;
+import com.wap.web1.dto.GroupMembersDto;
 import com.wap.web1.dto.StudyGroupCreateDto;
 import com.wap.web1.repository.StudyGroupRepository;
 import com.wap.web1.repository.StudyMemberRepository;
@@ -11,6 +12,9 @@ import com.wap.web1.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +57,27 @@ public class StudyGroupService {
         studyMemberRepository.save(leaderMember);
 
         return new Response("스터디 정보가 성공적으로 생성되었습니다.");
+    }
+
+    @Transactional(readOnly = true)
+    public GroupMembersDto getStudyGroupMembers(Long studyGroupId) {
+        StudyGroup group = studyGroupRepository.findById(studyGroupId)
+                .orElseThrow(() -> new IllegalArgumentException("스터디그룹을 찾을 수 없습니다"));
+
+        List<StudyMember> members = studyMemberRepository.findByStudyGroupId(studyGroupId);
+
+        List<GroupMembersDto.MemberDto> memberDtos = members.stream()
+                .filter(member -> member.getStatus() == StudyMember.Status.ACTIVE)
+                .map(member -> GroupMembersDto.MemberDto.builder()
+                        .userId(member.getUser().getId())
+                        .nickname(member.getUser().getNickname())
+                        .profileImage(member.getUser().getProfileImage())
+                        .build())
+                .collect(Collectors.toList());
+
+        return GroupMembersDto.builder()
+                .studyGroupId(group.getId())
+                .members(memberDtos)
+                .build();
     }
 }

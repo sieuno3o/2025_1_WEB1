@@ -2,6 +2,7 @@ package com.wap.web1.controller;
 
 import com.wap.web1.comfig.CurrentUser;
 import com.wap.web1.dto.CustomUserDetails;
+import com.wap.web1.dto.GroupMembersDto;
 import com.wap.web1.dto.StudyGroupCreateDto;
 import com.wap.web1.response.Response;
 import com.wap.web1.service.StudyGroupService;
@@ -26,4 +27,12 @@ public class StudyGroupController {
         Response response = studyGroupService.createStudyGroup(dto, userId);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{studyGroupId}/members")
+    public ResponseEntity<GroupMembersDto> getMembers(@PathVariable Long studyGroupId){
+        GroupMembersDto response = studyGroupService.getStudyGroupMembers(studyGroupId);
+        return ResponseEntity.ok(response);
+    }
 }
+
+

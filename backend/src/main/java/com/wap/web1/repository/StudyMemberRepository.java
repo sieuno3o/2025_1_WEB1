@@ -16,4 +16,7 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> 
 
     List<StudyMember> findByUserId(Long userId);
 
+    // 특정 스터디 그룹에 속한 멤버 전체 조회
+    List<StudyMember> findByStudyGroupId(Long studyGroupId);
+
 }
