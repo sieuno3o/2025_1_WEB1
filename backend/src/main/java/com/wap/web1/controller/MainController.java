@@ -23,6 +23,10 @@ public class MainController {
         Response response = mainService.joinStudyGroup(studyGroupId,userId);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/test")
+    public ResponseEntity<String> testEndpoint() {
+        return ResponseEntity.ok("서버 돌아가는중");
+    }
 
 
 }
