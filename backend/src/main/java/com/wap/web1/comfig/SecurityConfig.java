@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/auth/reissue", "/auth/join").permitAll()  // /auth/login 경로 허용
+                        .requestMatchers("/", "/login", "/auth/reissue", "/auth/join").permitAll()  // /auth/login 경로 허용
                         .requestMatchers("/auth/logout").permitAll()
                         .requestMatchers("/api/studygroup/create").permitAll()
                         .requestMatchers("/api/main/{study_group_id}/join").permitAll()
@@ -87,7 +87,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "http://43.200.233.57:3000"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Refresh", "Content-Type", "access"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh", "access"));
