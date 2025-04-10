@@ -63,6 +63,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/logout").permitAll()
                         .requestMatchers("/api/studygroup/create").permitAll()
                         .requestMatchers("/api/main/{study_group_id}/join").permitAll()
+                        .requestMatchers("/api/main/test").permitAll() // 테스트용
                         .anyRequest().authenticated()
                 );
 
