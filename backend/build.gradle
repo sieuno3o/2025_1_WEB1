@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
 }
@@ -34,14 +35,21 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    implementation 'mysql:mysql-connector-java:8.0.33'// MySQL Connector/J
+    implementation 'mysql:mysql-connector-java:8.0.33' // MySQL Connector/J
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Spring Data JPA
 
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+    // Dotenv 라이브러리 추가
+    implementation 'io.github.cdimascio:dotenv-java:5.2.2' // dotenv library
 }
 
 test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = 'com.wap.web1.StudyManagementApplication'
 }
