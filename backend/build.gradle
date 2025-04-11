@@ -43,7 +43,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
     // Dotenv 라이브러리 추가
-    implementation 'io.github.cdimascio:dotenv-java:5.2.2' // dotenv library
+    //implementation 'io.github.cdimascio:dotenv-java:5.2.2' // dotenv library
 }
 
 test {

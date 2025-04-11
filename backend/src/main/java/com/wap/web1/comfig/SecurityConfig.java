@@ -62,7 +62,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/login", "/auth/reissue", "/auth/join").permitAll()  // /auth/login 경로 허용
                         .requestMatchers("/auth/logout").permitAll()
                         .requestMatchers("/api/studygroup/create").permitAll()
-                        .requestMatchers("/api/main/{study_group_id}/join").permitAll()
+                        .requestMatchers("/api/main/{study_group_id}/join","/api/main/grouplist").permitAll()
                         .requestMatchers("/api/main/test").permitAll() // 테스트용
                         .anyRequest().authenticated()
                 );
