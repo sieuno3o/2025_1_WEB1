@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './StudyGroupForm.scss';
 import 'assets/style/_flex.scss';
 import 'assets/style/_typography.scss';
+import { createStudyGroup } from 'api/createGroupFormApi';
 
 const StudyGroupForm = () => {
 	const [groupName, setGroupName] = useState('');
@@ -12,8 +13,24 @@ const StudyGroupForm = () => {
 	const [memberCount, setMemberCount] = useState('');
 	const [notice, setNotice] = useState('');
 
-	const handleCheckDuplicate = () => {
-		alert(`'${groupName}' 그룹 이름 중복 체크`);
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		const groupData = {
+			name: groupName,
+			maxMembers: Number(memberCount),
+			notice,
+			meetingDays: `${meetingCycle} ${meetingDay}일`,
+			meetingTime,
+		};
+
+		try {
+			const response = await createStudyGroup(groupData);
+			alert(response.data.message);
+		} catch (error) {
+			console.error('스터디 그룹 생성 실패:', error);
+			alert('스터디 그룹 생성에 실패했습니다.');
+		}
 	};
 
 	return (
@@ -101,7 +118,9 @@ const StudyGroupForm = () => {
 				/>
 			</div>
 
-			<button className="create-button">생성하기</button>
+			<button className="create-button" onClick={handleSubmit}>
+				생성하기
+			</button>
 		</div>
 	);
 };

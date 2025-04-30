@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Home, Plus, User } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import 'assets/style/_flex.scss';
+import 'assets/style/_typography.scss';
 import './NavBar.scss';
 import StudyGroupForm from 'features/studyGroupForm/StudyGroupForm';
 
@@ -21,7 +23,7 @@ const NavBar = () => {
 
 	return (
 		<>
-			<nav className="nav-bar">
+			<nav className="nav-bar flex-center">
 				<button
 					onClick={() => navigate('/')}
 					className={isActive('/') ? 'active' : ''}
