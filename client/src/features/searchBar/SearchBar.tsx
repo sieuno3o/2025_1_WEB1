@@ -1,4 +1,7 @@
+import { Search } from 'lucide-react';
 import './SearchBar.scss';
+import 'assets/style/_flex.scss';
+import 'assets/style/_typography.scss';
 
 const SearchBar = () => {
 	return (
