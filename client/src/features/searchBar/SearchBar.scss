@@ -1,5 +1,5 @@
 @import 'assets/style/_typography.scss';
-@import 'assets/style/_color.scss';
+@import 'assets/style/_colors.scss';
 
 .searchbar {
 	background-color: $main-color-green;
@@ -11,21 +11,28 @@
 	justify-content: center;
 	padding: 40px 0;
 	background-color: white;
-}
 
-.searchbar-container {
-	display: flex;
-	align-items: center;
-	border: 2px solid $main-color-green;
-	border-radius: 50px;
-	padding: 12px 20px;
-	width: 80%;
-	max-width: 400px;
-	background-color: white;
-}
+	.searchbar-icon {
+		width: 18px;
+		height: 18px;
+		margin-right: 10px;
+		cursor: pointer;
+		color: $main-color-green;
+	}
+
+	.searchbar-container {
+		display: flex;
+		align-items: center;
+		border: 2px solid $main-color-green;
+		border-radius: 50px;
+		padding: 12px 20px;
+		width: 80%;
+		max-width: 400px;
+		background-color: white;
+	}
 
 	svg {
-		color: $MAIN-COLOR-GREEN;
+		color: $main-color-green;
 		width: 20px;
 		height: 20px;
 	}
