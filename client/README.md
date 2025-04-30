@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+## 📖 Introduction
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+스터디 그룹 생성, 목표 설정, 진행 상황 관리를 지원하는 통합 관리 플랫폼
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+## 🖥️ Tech Stacks
 
-### `npm start`
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
+<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white">
 
-### `npm test`
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 😺 Team Members
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/yeeeon02">
+    <img src="https://avatars.githubusercontent.com/u/122443510?v=4" width="100px;" alt=""/>
+    <td align="center"><a href="https://github.com/sieuno3o">
+    <img src="https://avatars.githubusercontent.com/u/103474525?v=4" width="100px;" alt=""/>
+    <td align="center"><a href="https://github.com/Ksuwon">
+    <img src="https://avatars.githubusercontent.com/u/181618655?v=4" width="100px;" alt=""/>
+    <td align="center"><a href="https://github.com/chaerin05">
+    <img src="https://avatars.githubusercontent.com/u/163750775?v=4" width="100px;" alt=""/>
+    <td align="center"><a href="https://github.com/chaerin05">
+    <img src="https://avatars.githubusercontent.com/u/163750775?v=4" width="100px;" alt=""/>
+  </tr>
+    <tr>
+    <td align="center"><a href="https://github.com/yeeeon02" title="Code">강채연</a></td>
+    <td align="center"><a href="https://github.com/StarrySnowy" title="Code">김시은</a></td>
+    <td align="center"><a href="https://github.com/Ksuwon" title="Code">김수원</a></td>
+    <td align="center"><a href="https://github.com/chaerin05" title="Code">이채린</a></td>
+    <td align="center"><a href="https://github.com/chaerin05" title="Code">최진희</a></td>
+  </tr>
+    <tr>
+    <td align="center">Front End</td>
+    <td align="center">Front End</td>
+    <td align="center">Back End</td>
+    <td align="center">Back End</td>
+    <td align="center">Design</td>
+  </tr>
+</table>
