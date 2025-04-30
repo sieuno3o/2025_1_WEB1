@@ -1,15 +1,32 @@
-// 폰트 정의
-@font-face {
-	font-family: 'HakgyoansimDunggeunmisoTTF-B';
-	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2')
-		format('woff2');
-}
-
 @font-face {
 	font-family: 'TTLaundryGothicB';
 	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2')
 		format('woff2');
 	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NanumSquareRound';
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'HakgyoansimWoojuR';
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NEXON Lv2 Gothic';
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff')
+		format('woff');
+	font-weight: normal;
 	font-style: normal;
 }
 
@@ -30,4 +47,24 @@
 	font-size: 20px;
 	line-height: 24px;
 	font-family: 'TTLaundryGothicB', sans-serif;
+}
+
+// 강조 텍스트
+.body1 {
+	font-size: 18px;
+	line-height: 24px;
+	font-weight: bold;
+	font-family: 'NEXON Lv2 Gothic', sans-serif;
+}
+
+.body2 {
+	font-size: 16px;
+	line-height: 16px;
+	font-family: 'NEXON Lv2 Gothic', sans-serif;
+}
+
+.body3 {
+	font-size: 14px;
+	line-height: 16px;
+	font-family: 'NEXON Lv2 Gothic', sans-serif;
 }
