@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import 'assets/style/_flex.scss';
 import 'assets/style/_typography.scss';
 import StudyGroupsList from 'features/studyGroupList/StudyGroupsList';
+import SearchBar from 'features/searchBar/SearchBar';
 
 const MainPage = () => {
 	const navigate = useNavigate();
@@ -15,9 +16,8 @@ const MainPage = () => {
 		<div className="">
 			<div>
 				{/* 헤더 컴포넌트 */}
-				{/* 검색 컴포넌트 */}
+				<SearchBar />
 				<StudyGroupsList />
-				{/* 하단바 컴포넌트 */}
 
 				{!isLoggedIn && <button onClick={goToLogin}>로그인</button>}
 				{isLoggedIn && <p>환영합니다! 😄</p>}

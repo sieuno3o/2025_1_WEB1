@@ -1,0 +1,32 @@
+@import 'assets/style/_typography.scss';
+@import 'assets/style/_color.scss';
+
+.search-bar {
+	border: 2px solid $MAIN-COLOR-GREEN;
+	border-radius: 9999px;
+	padding: 0.5rem 1rem;
+	width: 100%;
+	max-width: 36rem;
+	margin: 0 auto;
+	box-sizing: border-box;
+
+	svg {
+		color: $MAIN-COLOR-GREEN;
+		width: 20px;
+		height: 20px;
+	}
+
+	input {
+		margin-left: 0.5rem;
+		width: 100%;
+		border: none;
+		background: transparent;
+		outline: none;
+		color: #333;
+		font-size: 1rem;
+
+		&::placeholder {
+			color: #ccc;
+		}
+	}
+}
