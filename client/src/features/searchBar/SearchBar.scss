@@ -1,0 +1,39 @@
+@import 'assets/style/_colors.scss';
+
+.searchbar-wrapper {
+	display: flex;
+	justify-content: center;
+	margin: 40px 0;
+}
+
+.searchbar-container {
+	display: flex;
+	align-items: center;
+	border: 2px solid $main-color-green;
+	border-radius: 50px;
+	padding: 12px 20px;
+	width: 80%;
+	max-width: 400px;
+	background-color: white;
+}
+
+.searchbar-icon {
+	width: 18px;
+	height: 18px;
+	margin-right: 10px;
+	cursor: pointer;
+	color: $main-color-green;
+}
+
+.searchbar-input {
+	border: none;
+	outline: none;
+	flex: 1;
+	font-size: 16px;
+	color: #444;
+	background-color: transparent;
+
+	&::placeholder {
+		color: #aaa;
+	}
+}

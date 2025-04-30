@@ -1,3 +1,5 @@
+@import 'assets/style/_colors.scss';
+
 .list-container {
 	width: 100%;
 	margin: auto;
@@ -8,7 +10,7 @@
 .list-box {
 	margin: auto;
 	width: 80%;
-	border: 2px solid #87cd37;
+	border: 2px solid $main-color-green;
 	border-radius: 20px;
 	padding: 5%;
 	margin-bottom: 10%;
