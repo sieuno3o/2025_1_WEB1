@@ -40,5 +40,4 @@ public class MainController {
         return ResponseEntity.ok("서버 돌아가는중");
     }
 
-
 }
