@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'assets/style/global.scss';
-import { useEffect } from 'react';
+import NavBar from './NavBar';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
 	useEffect(() => {
@@ -14,7 +14,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 		return () => window.removeEventListener('resize', setVh);
 	}, []);
 
-	return <div className="wrapper">{children}</div>;
+	return (
+		<div className="wrapper">
+			<div className="content">{children}</div>
+			<NavBar />
+		</div>
+	);
 };
 
 export default Layout;
