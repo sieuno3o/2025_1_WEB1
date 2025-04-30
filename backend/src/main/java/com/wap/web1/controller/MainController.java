@@ -21,9 +21,9 @@ public class MainController {
     public ResponseEntity<Response> joinStudyGroup(
             @PathVariable("study_group_id") Long studyGroupId,
             @CurrentUser CustomUserDetails currentUser
-    ){
+    ) {
         Long userId = currentUser.getUser().getId();
-        Response response = mainService.joinStudyGroup(studyGroupId,userId);
+        Response response = mainService.joinStudyGroup(studyGroupId, userId);
         return ResponseEntity.ok(response);
     }
 
@@ -39,5 +39,5 @@ public class MainController {
     public ResponseEntity<String> testEndpoint() {
         return ResponseEntity.ok("서버 돌아가는중");
     }
-
 }
+

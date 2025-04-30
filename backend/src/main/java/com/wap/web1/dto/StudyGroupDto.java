@@ -1,9 +1,13 @@
 package com.wap.web1.dto;
 
+import com.wap.web1.domain.Category;
+import com.wap.web1.domain.Region;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Calendar;
 
 @Getter
 @Setter
@@ -14,8 +18,10 @@ public class StudyGroupDto {
     private String name;
     private String meetingDays;
     private String meetingTime;
-    private String department;
     private String meetingType;
     private int currentMembers;
     private int maxMembers;
+    private Region region;
+    private Category category;
+    private String type;
 }

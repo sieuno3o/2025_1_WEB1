@@ -41,7 +41,9 @@ public class StudyGroupService {
                 .meetingDays(dto.getMeetingDays())
                 .meetingTime(dto.getMeetingTime())
                 .meetingType(dto.getMeetingType())
-                .department(dto.getDepartment())
+                .region(dto.getRegion())
+                .category(dto.getCategory())
+                .type(dto.getType())
                 .build();
 
         studyGroupRepository.save(group);

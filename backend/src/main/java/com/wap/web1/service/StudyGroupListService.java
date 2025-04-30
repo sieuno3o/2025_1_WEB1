@@ -36,10 +36,13 @@ public class StudyGroupListService {
                             studyGroup.getName(),
                             studyGroup.getMeetingDays(),
                             studyGroup.getMeetingTime(),
-                            studyGroup.getDepartment(),
                             studyGroup.getMeetingType(),
                             (int) currentMembers,
-                            studyGroup.getMaxMembers()
+                            studyGroup.getMaxMembers(),
+                            studyGroup.getRegion(),
+                            studyGroup.getCategory(),
+                            studyGroup.getType()
+
                     );
                 })
                 .collect(Collectors.toList());
