@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Home, Plus, User } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import 'assets/style/NavBar.scss';
-import StudyGroupForm from 'features/StudyGroupForm';
+import './NavBar.scss';
+import StudyGroupForm from 'features/studyGroupForm/StudyGroupForm';
 
 const NavBar = () => {
 	const navigate = useNavigate();
@@ -26,16 +26,16 @@ const NavBar = () => {
 					onClick={() => navigate('/')}
 					className={isActive('/') ? 'active' : ''}
 				>
-					<Home size={24} />
+					<Home />
 				</button>
 				<button onClick={openStudyGroupForm} className="plus-button">
-					<Plus size={36} />
+					<Plus />
 				</button>
 				<button
 					onClick={() => navigate('/mypage')}
 					className={isActive('/mypage') ? 'active' : ''}
 				>
-					<User size={24} />
+					<User />
 				</button>
 			</nav>
 
@@ -48,7 +48,7 @@ const NavBar = () => {
 						left: 0,
 						width: '100%',
 						height: '100%',
-						backgroundColor: 'rgba(0,0,0,0.5)',
+						backgroundColor: 'rgba(0,0,0,0.2)',
 						display: 'flex',
 						justifyContent: 'center',
 						alignItems: 'center',
@@ -60,7 +60,7 @@ const NavBar = () => {
 							background: 'white',
 							borderRadius: '16px',
 							padding: '32px',
-							width: '400px',
+							width: '300px',
 							position: 'relative',
 							boxShadow: '0 10px 25px rgba(0,0,0,0.3)',
 						}}

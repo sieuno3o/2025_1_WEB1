@@ -1,0 +1,112 @@
+@import 'assets/style/_colors.scss';
+
+.study-group-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	width: 100%;
+
+	.group-name {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+
+		.group-name-input {
+			width: 100%;
+			border: none;
+			border-bottom: 1px solid $main-color-green;
+			outline: none;
+			padding: 0.5rem 0;
+		}
+	}
+
+	.meeting-period {
+		width: 4rem;
+		padding: 0.4rem;
+		border: none;
+		border-bottom: 1px solid $main-color-green;
+		outline: none;
+		background: transparent;
+	}
+
+	.meeting-period-input {
+		width: 5rem;
+		padding: 0.4rem;
+		border: none;
+		border-bottom: 1px solid $main-color-green;
+		outline: none;
+		margin: 0 0.5rem;
+	}
+
+	.meeting-method {
+		display: flex;
+		gap: 0.5rem;
+
+		.meeting-method-button {
+			flex: 1;
+			padding: 0.5rem;
+			border: 1px solid $main-color-green;
+			border-radius: 8px;
+			background-color: white;
+			color: #333;
+			cursor: pointer;
+
+			&.bg-green-300 {
+				background-color: $main-color-green;
+				color: white;
+			}
+		}
+	}
+
+	.time-option {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0.5rem;
+
+		.time-option-button {
+			padding: 0.5rem;
+			border: 1px solid $main-color-green;
+			border-radius: 8px;
+			background-color: white;
+			cursor: pointer;
+
+			&.bg-green-300 {
+				background-color: $main-color-green;
+				color: white;
+			}
+		}
+	}
+
+	.program-quota {
+		width: 100%;
+		padding: 0.5rem;
+		border: none;
+		border-bottom: 1px solid $main-color-green;
+		background-color: transparent;
+		outline: none;
+	}
+
+	.notice {
+		width: 100%;
+		padding: 0.5rem;
+		border: none;
+		border-bottom: 1px solid $main-color-green;
+		outline: none;
+	}
+
+	.create-button {
+		width: 100%;
+		padding: 0.75rem;
+		margin-top: 0.5rem;
+		border: none;
+		border-radius: 8px;
+		background-color: $main-color-green;
+		color: white;
+		font-weight: bold;
+		cursor: pointer;
+
+		&:hover {
+			background-color: darken($main-color-green, 10%);
+		}
+	}
+}

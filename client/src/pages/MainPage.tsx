@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import 'assets/style/_flex.scss';
 import 'assets/style/_typography.scss';
 import StudyGroupsList from 'features/studyGroupList/StudyGroupsList';
+import Header from 'features/header/Header';
 import SearchBar from 'features/searchBar/SearchBar';
 
 const MainPage = () => {
@@ -15,7 +16,7 @@ const MainPage = () => {
 	return (
 		<div className="">
 			<div>
-				{/* 헤더 컴포넌트 */}
+				<Header />
 				<SearchBar />
 				<StudyGroupsList />
 
