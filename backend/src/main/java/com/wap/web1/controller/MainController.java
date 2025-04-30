@@ -40,5 +40,8 @@ public class MainController {
         return ResponseEntity.ok("서버 돌아가는중");
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 65416775549ee1a15b3999f3b30900d4ce9b8ee5
 }
