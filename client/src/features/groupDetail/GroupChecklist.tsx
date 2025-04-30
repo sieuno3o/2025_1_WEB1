@@ -6,11 +6,11 @@ const GroupChecklist = () => {
 	return (
 		<div className="group-checklist">
 			<div className="check-row">
-				<input type="checkbox" />
+				<input type="checkbox" className="check-box" />
 				<input type="text" className="check-input" />
 			</div>
 			<div className="check-row">
-				<input type="checkbox" />
+				<input type="checkbox" className="check-box" />
 				<input type="text" className="check-input" />
 			</div>
 		</div>

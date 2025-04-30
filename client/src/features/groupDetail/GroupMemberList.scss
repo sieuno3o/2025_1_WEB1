@@ -1,3 +1,32 @@
+@import 'assets/style/_colors.scss';
+
 .group-member {
 	background-color: white;
+	padding: 0 13%;
+
+	.group-member-title {
+		margin-bottom: 12px;
+	}
+
+	.group-member-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+		gap: 16px;
+	}
+
+	.member-card {
+		margin: 0;
+		padding: 0;
+	}
+
+	.avatar {
+		width: 50px;
+		height: 50px;
+		border-radius: 8px;
+		background-color: #ccc;
+	}
+
+	.nickname {
+		margin-top: 4px;
+	}
 }
