@@ -1,4 +1,5 @@
 @import url('https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/pretendard.css');
+@import 'assets/style/_colors.scss';
 
 * {
 	margin: 0;
@@ -19,7 +20,7 @@ body {
 	max-width: 390px;
 	min-height: 100vh;
 	margin: 0 auto;
-	background: #ffffff;
+	background: white;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 

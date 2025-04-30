@@ -1,9 +1,15 @@
 @import 'assets/style/_colors.scss';
 
+.searchbar {
+	background-color: $main-color-green;
+}
+
 .searchbar-wrapper {
+	border-radius: 50px 50px 0 0;
 	display: flex;
 	justify-content: center;
-	margin: 40px 0;
+	padding: 40px 0;
+	background-color: white;
 }
 
 .searchbar-container {
