@@ -1,0 +1,14 @@
+@import 'assets/style/_colors.scss';
+
+.header-wrapper {
+	background-color: $main-color-green;
+	min-height: 150px;
+}
+
+.header-item {
+	gap: 16px;
+}
+
+.title-name {
+	color: #f1ffe2;
+}
