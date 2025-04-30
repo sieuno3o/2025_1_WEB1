@@ -6,7 +6,6 @@ import 'assets/style/_typography.scss';
 import StudyGroupsList from 'features/studyGroupList/StudyGroupsList';
 import Header from 'features/header/Header';
 import SearchBar from 'features/searchBar/SearchBar';
-import NavBar from 'features/navBar/NavBar';
 
 const MainPage = () => {
 	const navigate = useNavigate();
@@ -32,7 +31,6 @@ const MainPage = () => {
 				<Header />
 				<SearchBar />
 				<StudyGroupsList />
-				<NavBar />
 
 				{!isLoggedIn && <button onClick={goToLogin}>로그인</button>}
 				{isLoggedIn && <p>환영합니다! 😄</p>}
