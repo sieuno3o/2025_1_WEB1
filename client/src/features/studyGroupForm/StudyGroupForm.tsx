@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './StudyGroupForm.scss';
 import 'assets/style/_flex.scss';
 import 'assets/style/_typography.scss';
-import { createStudyGroup } from 'api/createGroupFormApi';
+import { createStudyGroup, Category, Region } from 'api/createGroupFormApi';
 
 const StudyGroupForm = () => {
 	const [groupName, setGroupName] = useState('');
@@ -12,6 +12,8 @@ const StudyGroupForm = () => {
 	const [meetingDay, setMeetingDay] = useState('');
 	const [memberCount, setMemberCount] = useState('');
 	const [notice, setNotice] = useState('');
+	const [region, setRegion] = useState<Region>(Region.해당없음);
+	const [category, setCategory] = useState<Category>(Category.기타);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -22,11 +24,14 @@ const StudyGroupForm = () => {
 			notice,
 			meetingDays: `${meetingCycle} ${meetingDay}일`,
 			meetingTime,
+			region,
+			category,
+			type: meetingType,
 		};
 
 		try {
 			const response = await createStudyGroup(groupData);
-			alert(response.data.message);
+			alert(response.message);
 		} catch (error) {
 			console.error('스터디 그룹 생성 실패:', error);
 			alert('스터디 그룹 생성에 실패했습니다.');
@@ -95,14 +100,27 @@ const StudyGroupForm = () => {
 
 			<div>
 				<select
-					value={memberCount}
-					onChange={(e) => setMemberCount(e.target.value)}
-					className="program-quota button2"
+					value={region}
+					onChange={(e) => setRegion(e.target.value as Region)}
+					className="region-select button2"
 				>
-					<option value="">모집 정원 선택</option>
-					{[2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-						<option key={num} value={num}>
-							{num}명
+					{Object.values(Region).map((r) => (
+						<option key={r} value={r}>
+							{r}
+						</option>
+					))}
+				</select>
+			</div>
+
+			<div>
+				<select
+					value={category}
+					onChange={(e) => setCategory(e.target.value as Category)}
+					className="category-select button2"
+				>
+					{Object.values(Category).map((c) => (
+						<option key={c} value={c}>
+							{c}
 						</option>
 					))}
 				</select>
