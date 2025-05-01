@@ -59,10 +59,10 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/auth/reissue", "/auth/join").permitAll()  // /auth/login 경로 허용
+                        .requestMatchers("/", "/auth/login", "/auth/reissue", "/auth/join").permitAll()  // /auth/login 경로 허용
                         .requestMatchers("/auth/logout").permitAll()
                         .requestMatchers("/api/studygroup/create").permitAll()
-                        .requestMatchers("/api/main/{study_group_id}/join","/api/main/grouplist").permitAll()
+                        .requestMatchers("/api/main/{study_group_id}/join","/api/main/grouplist","/grouplist/search/**").permitAll()
                         .requestMatchers("/api/main/test").permitAll() // 테스트용
                         .anyRequest().authenticated()
                 );
@@ -88,7 +88,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","https://dolearn.netlify.app"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Refresh", "Content-Type", "access"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh", "access"));
@@ -98,4 +98,3 @@ public class SecurityConfig {
         return source;
     }
 }
-

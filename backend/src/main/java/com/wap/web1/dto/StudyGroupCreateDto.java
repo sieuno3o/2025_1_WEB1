@@ -1,5 +1,7 @@
 package com.wap.web1.dto;
 
+import com.wap.web1.domain.Category;
+import com.wap.web1.domain.Region;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +21,7 @@ public class StudyGroupCreateDto {
     private String meetingDays;
     private String meetingTime;
     private String meetingType;
-    private String department;
+    private Region region;
+    private Category category;
+    private String type;
 }

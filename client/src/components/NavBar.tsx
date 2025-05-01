@@ -1,18 +1,43 @@
 import { useState } from 'react';
-import { Home, Plus, User } from 'lucide-react';
+import { Home, Plus, User, ArrowLeftCircle } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import 'assets/style/_flex.scss';
+import 'assets/style/_typography.scss';
 import './NavBar.scss';
 import StudyGroupForm from 'features/studyGroupForm/StudyGroupForm';
+import { isLoggedIn } from 'utils/auth';
+import LoginModal from 'components/LoginModal';
 
 const NavBar = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [isStudyGroupFormOpen, setIsStudyGroupFormOpen] = useState(false);
+	const [showLoginModal, setShowLoginModal] = useState(false);
+
+	const isGroupDetail = location.pathname.startsWith('/group-detail');
+	const isMyPage = location.pathname === '/mypage';
+	const showBackButton = isGroupDetail || isMyPage;
+
+	const handleBack = () => {
+		navigate(-1);
+	};
+
+	const handleMypageClick = () => {
+		if (isLoggedIn()) {
+			navigate('/mypage');
+		} else {
+			setShowLoginModal(true);
+		}
+	};
 
 	const isActive = (path: string) => location.pathname === path;
 
 	const openStudyGroupForm = () => {
-		setIsStudyGroupFormOpen(true);
+		if (isLoggedIn()) {
+			setIsStudyGroupFormOpen(true);
+		} else {
+			setShowLoginModal(true);
+		}
 	};
 
 	const closeStudyGroupForm = () => {
@@ -21,25 +46,41 @@ const NavBar = () => {
 
 	return (
 		<>
-			<nav className="nav-bar">
+			<nav className="nav-bar flex-center">
 				<button
 					onClick={() => navigate('/')}
 					className={isActive('/') ? 'active' : ''}
 				>
 					<Home />
 				</button>
-				<button onClick={openStudyGroupForm} className="plus-button">
-					<Plus />
-				</button>
+
+				{showBackButton ? (
+					<button onClick={handleBack} className="back-button">
+						<ArrowLeftCircle />
+					</button>
+				) : (
+					<button onClick={openStudyGroupForm} className="plus-button">
+						<Plus />
+					</button>
+				)}
+
 				<button
-					onClick={() => navigate('/mypage')}
+					onClick={handleMypageClick}
 					className={isActive('/mypage') ? 'active' : ''}
 				>
 					<User />
 				</button>
 			</nav>
 
-			{/* 모달 */}
+			<LoginModal
+				visible={showLoginModal}
+				onClose={() => setShowLoginModal(false)}
+				onConfirm={() => {
+					setShowLoginModal(false);
+					navigate('/login');
+				}}
+			/>
+
 			{isStudyGroupFormOpen && (
 				<div
 					style={{

@@ -38,5 +38,11 @@ public class StudyGroup {
 
     private String meetingType;
 
-    private String department;
+    @Enumerated(EnumType.STRING)
+    private Region region;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    private String type;
 }

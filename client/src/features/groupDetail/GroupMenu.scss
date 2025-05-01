@@ -1,5 +1,33 @@
+@import 'assets/style/_colors.scss';
+
+.group-menu-top {
+	background-color: $main-color-green;
+}
+
 .group-menu {
 	background-color: white;
-	padding: 10% 20%;
+	padding: 10% 0;
 	border-radius: 50px 50px 0 0;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	.group-menu-item {
+		width: 70%;
+	}
+}
+
+.menu-item {
+	border-radius: 50%;
+	background-color: $main-color-green;
+	padding: 10px;
+
+	color: white;
+	width: auto;
+	&:hover {
+		cursor: pointer;
+		background-color: $main-color-dark-green;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+}
+
+.menu-title {
+	margin-top: 10px;
 }
