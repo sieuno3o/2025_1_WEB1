@@ -33,6 +33,12 @@ export enum Region {
 	해당없음 = '해당없음',
 }
 
+export enum StudyType {
+	온라인 = '온라인',
+	오프라인 = '오프라인',
+	혼합 = '혼합', //필요하다면...
+}
+
 interface CreateGroupParams {
 	name: string;
 	maxMembers: number;
@@ -61,11 +67,14 @@ export const createStudyGroup = async (
 		const response = await api.post('/api/studygroup/create', data, {
 			headers: {
 				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
 			},
 		});
 
 		return response.data;
-	} catch (error) {
-		throw new Error(`스터디 그룹 생성에 실패했습니다: ${error}`);
+	} catch (error: any) {
+		throw new Error(
+			`스터디 그룹 생성에 실패했습니다: ${error?.message || error}`,
+		);
 	}
 };
