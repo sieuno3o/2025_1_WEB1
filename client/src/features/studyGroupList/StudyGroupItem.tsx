@@ -39,11 +39,9 @@ const StudyGroupItem: React.FC<StudyGroupItemProps> = ({ group }) => {
 				{group.meetingType && (
 					<div className="meeting-type button3">{group.meetingType}</div>
 				)}
-				<div>
-					<span className="meeting-type">
-						{group.region?.trim() ? group.region : '비대면'}
-					</span>
-				</div>
+				<span className="meeting-type button3">
+					{group.region?.trim() ? group.region : '비대면'}
+				</span>
 			</div>
 
 			<div className="middle-row flex-row button1">
