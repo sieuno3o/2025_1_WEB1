@@ -6,7 +6,9 @@ import { createStudyGroup, Category, Region } from 'api/createGroupFormApi';
 
 const StudyGroupForm = () => {
 	const [groupName, setGroupName] = useState('');
-	const [meetingType, setMeetingType] = useState<'대면' | '비대면' | ''>('');
+	const [meetingType, setMeetingType] = useState<'오프라인' | '온라인' | ''>(
+		'',
+	);
 	const [meetingTime, setMeetingTime] = useState('');
 	const [meetingCycle, setMeetingCycle] = useState<'월' | '주'>('월');
 	const [meetingDay, setMeetingDay] = useState('');
@@ -18,9 +20,36 @@ const StudyGroupForm = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
+		if (groupName.trim().length < 2) {
+			alert('스터디명을 2자 이상 입력해주세요.');
+			return;
+		}
+
+		if (!meetingType) {
+			alert('스터디 형태를 선택해주세요.');
+			return;
+		}
+
+		if (!meetingTime) {
+			alert('모임 시간을 선택해주세요.');
+			return;
+		}
+
+		const day = Number(meetingDay);
+		if (!day || day < 1 || day > 31) {
+			alert('올바른 날짜(1~31)를 입력해주세요.');
+			return;
+		}
+
+		const members = Number(memberCount);
+		if (!members || members < 2) {
+			alert('최소 인원은 2명 이상이어야 합니다.');
+			return;
+		}
+
 		const groupData = {
-			name: groupName,
-			maxMembers: Number(memberCount),
+			name: groupName.trim(),
+			maxMembers: members,
 			notice,
 			meetingDays: `${meetingCycle} ${meetingDay}일`,
 			meetingTime,
@@ -73,14 +102,14 @@ const StudyGroupForm = () => {
 
 			<div className="meeting-method">
 				<button
-					onClick={() => setMeetingType('대면')}
-					className={`meeting-method-button button2 ${meetingType === '대면' ? 'bg-green-300' : ''}`}
+					onClick={() => setMeetingType('오프라인')}
+					className={`meeting-method-button button2 ${meetingType === '오프라인' ? 'bg-green-300' : ''}`}
 				>
 					대면
 				</button>
 				<button
-					onClick={() => setMeetingType('비대면')}
-					className={`meeting-method-button button2 ${meetingType === '비대면' ? 'bg-green-300' : ''}`}
+					onClick={() => setMeetingType('온라인')}
+					className={`meeting-method-button button2 ${meetingType === '온라인' ? 'bg-green-300' : ''}`}
 				>
 					비대면
 				</button>
@@ -98,19 +127,21 @@ const StudyGroupForm = () => {
 				))}
 			</div>
 
-			<div>
-				<select
-					value={region}
-					onChange={(e) => setRegion(e.target.value as Region)}
-					className="region-select button2"
-				>
-					{Object.values(Region).map((r) => (
-						<option key={r} value={r}>
-							{r}
-						</option>
-					))}
-				</select>
-			</div>
+			{meetingType === '온라인' && (
+				<div>
+					<select
+						value={region}
+						onChange={(e) => setRegion(e.target.value as Region)}
+						className="region-select button2"
+					>
+						{Object.values(Region).map((r) => (
+							<option key={r} value={r}>
+								{r}
+							</option>
+						))}
+					</select>
+				</div>
+			)}
 
 			<div>
 				<select
