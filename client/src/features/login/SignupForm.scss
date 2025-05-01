@@ -1,48 +1,47 @@
+@import 'assets/style/_colors.scss';
+
 .form-container {
-	max-width: 360px;
-	padding: 30px;
-	margin: auto;
+	width: 100%;
+	height: 100%;
+	padding: 0 60px;
+	margin-top: 13%;
 }
 
 .form-title {
-	font-size: 20px;
-	font-weight: bold;
-	margin-bottom: 20px;
-}
-
-.form-label {
-	margin-top: 16px;
+	margin-bottom: 40px;
 }
 
 .form-input {
 	width: 260px;
 	padding: 14px 8px;
-	margin-top: 4px;
-	border: 1px solid #73e177;
+	margin: 8px auto;
+	border: 1px solid $main-color-dark-green;
 
 	&:focus {
 		outline: none;
 	}
 }
 
-.signup-error {
-	color: red;
-	font-size: 12px;
-	margin-top: 2px;
-	width: 260px;
-	min-height: 30px;
-}
-
 .signup-btn {
-	margin-top: 24px;
-	padding: 14px 8px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	padding: 14px 0;
 	width: 260px;
-	background-color: #73e177;
+	background-color: $main-color-dark-green;
 	color: white;
 	border: none;
+	font-size: 15px;
 }
 
 .signup-btn:hover {
-	background-color: #bebebe;
+	background-color: $main-color-deep-green;
 	cursor: pointer;
+}
+
+.signup-error {
+	color: red;
+	font-size: 12px;
+	padding-bottom: 20px;
+	width: 260px;
+	min-height: 20px;
 }

@@ -1,3 +1,5 @@
+@import 'assets/style/_colors.scss';
+
 .login-container {
 	width: 100%;
 	padding: 0 60px;
@@ -5,7 +7,6 @@
 }
 
 .login-title {
-	font-size: 20px;
 	margin-bottom: 20px;
 }
 
@@ -13,7 +14,7 @@
 	width: 260px;
 	padding: 14px 8px;
 	margin: 8px auto;
-	border: 1px solid #73e177;
+	border: 1px solid $main-color-dark-green;
 
 	&:focus {
 		outline: none;
@@ -25,36 +26,57 @@
 	margin-bottom: 8px;
 	padding: 14px 0;
 	width: 260px;
-	background-color: #73e177;
+	background-color: $main-color-dark-green;
 	color: white;
 	border: none;
-	font-size: 15px;
 }
 
 .login-button:hover {
-	background-color: #bebebe;
+	background-color: $main-color-deep-green;
 	cursor: pointer;
 }
 
 .signup-page-btn {
-	font-size: 12px;
 	color: rgb(112, 112, 112);
 	cursor: pointer;
-}
 
-.signup-page-btn:hover {
-	text-decoration: underline;
+	&:hover {
+		text-decoration: underline;
+		color: rgb(71, 71, 71);
+	}
 }
 
 .login-error {
 	color: red;
-	font-size: 12px;
-	margin-top: 20px;
+	margin-top: 10px;
 	width: 260px;
 	min-height: 20px;
 }
 
-.auto-login-checkbox {
-	font-size: 12px;
-	color: rgb(112, 112, 112);
+.auto-login-radio {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 5px;
+	cursor: pointer;
+
+	.circle {
+		width: 12px;
+		height: 12px;
+		border: 1px solid $main-color-dark-green;
+		border-radius: 50%;
+		position: relative;
+
+		&.selected::after {
+			content: '';
+			width: 8px;
+			height: 8px;
+			background-color: $main-color-dark-green;
+			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
 }

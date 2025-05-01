@@ -123,8 +123,8 @@ const SignupForm = () => {
 	};
 
 	return (
-		<div className="flex-col-center" style={{ height: '100vh' }}>
-			<div className="form-container">
+		<div className="flex-col-center">
+			<div className="form-container body3">
 				<div className="heading2 form-title">회원가입</div>
 
 				<div className="form-label">이메일*</div>
@@ -200,7 +200,7 @@ const SignupForm = () => {
 					{errors.nickname || ' '}
 				</div>
 
-				<button className="signup-btn" onClick={handleSignup}>
+				<button className="signup-btn body3" onClick={handleSignup}>
 					회원가입
 				</button>
 				{submitError && <div className="signup-error">{submitError}</div>}
