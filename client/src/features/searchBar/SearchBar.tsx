@@ -13,7 +13,11 @@ const SearchBar = () => {
 						alt="search icon"
 						className="searchbar-icon"
 					/>
-					<input type="text" placeholder="검색" className="searchbar-input" />
+					<input
+						type="text"
+						placeholder="검색"
+						className="searchbar-input body3"
+					/>
 				</div>
 			</div>
 		</div>
