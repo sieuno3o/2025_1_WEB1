@@ -33,13 +33,18 @@ public class JoinService {
             return new ResponseEntity<>("Email is already registered", HttpStatus.BAD_REQUEST);
         }
 
+        if(userRepository.existsByNickname(nickname)) {
+            return new ResponseEntity<>("Nickname is already registered",HttpStatus.BAD_REQUEST);
+        }
+
         if(!isValidPassword(password)) {
             return new ResponseEntity<>("Password must be between 6 and 15 characters, and contain at least one lowercase letter, one uppercase letter, and one special character.",HttpStatus.BAD_REQUEST);
         }
 
+        String encodedpassword = bCryptPasswordEncoder.encode(password);
         User user = User.builder()
                 .email(email)
-                .password(bCryptPasswordEncoder.encode(password))
+                .password(encodedpassword)
                 .nickname(nickname)
                 .role("ROLE_USER")
                 .profileImage(profileImage)

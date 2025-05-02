@@ -90,13 +90,47 @@
 		background-color: transparent;
 		outline: none;
 	}
-
 	.notice {
 		width: 100%;
-		padding: 5px 4px;
+		height: 100px;
+		padding: 10px 4px;
 		border: none;
 		border-bottom: 1px solid $main-color-green;
 		outline: none;
+		resize: none;
+	}
+
+	.region-select {
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid $main-color-green;
+		outline: none;
+		padding: 0.5rem 0;
+	}
+
+	.category-select {
+		border: none;
+		border-bottom: 1px solid $main-color-green;
+		outline: none;
+		padding: 0.5rem 0;
+	}
+
+	.study-type-detail-input {
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid $main-color-green;
+		outline: none;
+		padding: 0.5rem 0;
+		margin-right: 35px;
+	}
+
+	.member-count-input {
+		width: 65px;
+		padding: 5px 0;
+		border: none;
+		border-bottom: 1px solid $main-color-green;
+		outline: none;
+		margin: 0 0.5rem;
 	}
 
 	.create-button {
