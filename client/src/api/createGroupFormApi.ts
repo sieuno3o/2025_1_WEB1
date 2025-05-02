@@ -53,7 +53,6 @@ interface CreateGroupParams {
 
 interface CreateGroupResponse {
 	message: string;
-}
 
 export const createStudyGroup = async (
 	data: CreateGroupParams,

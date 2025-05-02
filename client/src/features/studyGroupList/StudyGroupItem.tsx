@@ -57,7 +57,6 @@ const StudyGroupItem: React.FC<StudyGroupItemProps> = ({ group }) => {
 					{group.region?.trim() ? group.region : '비대면'}
 				</span>
 			</div>
-
 			<div className="middle-row flex-row button1">
 				<div>
 					<span className="info-label">주기</span> {group.meetingDays}
@@ -67,7 +66,6 @@ const StudyGroupItem: React.FC<StudyGroupItemProps> = ({ group }) => {
 					{group.meetingTime}
 				</div>
 			</div>
-
 			<div className="bottom-row flex-row button1">
 				<div>
 					<span className="info-label button1">인원</span>{' '}
