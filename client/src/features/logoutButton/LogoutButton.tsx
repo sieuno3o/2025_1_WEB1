@@ -10,13 +10,12 @@ const LogoutButton = () => {
 	const navigate = useNavigate();
 
 	const handleLogout = async () => {
-		try {
-			await logout(); // 서버에 로그아웃 요청
-		} catch (error) {
-			console.error('로그아웃 요청 실패:', error);
-		}
+		// try {
+		// 	await logout(); // 서버에 로그아웃 요청
+		// } catch (error) {
+		// 	console.error('로그아웃 요청 실패:', error);
+		// }
 
-		// 토큰 제거 (성공/실패 관계없이 클라이언트에선 제거)
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('refreshToken');
 		sessionStorage.removeItem('accessToken');

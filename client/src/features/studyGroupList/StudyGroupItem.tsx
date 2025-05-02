@@ -50,9 +50,9 @@ const StudyGroupItem: React.FC<StudyGroupItemProps> = ({ group }) => {
 		<div className="list-box" onClick={handleClick}>
 			<div className="top-row flex-between">
 				<div className="group-name body3">{group.name}</div>
-				{group.meetingType && (
+				{/* {group.meetingType && (
 					<div className="meeting-type button3">{group.meetingType}</div>
-				)}
+				)} */}
 				<span className="meeting-type button3">
 					{group.region?.trim() ? group.region : '비대면'}
 				</span>
