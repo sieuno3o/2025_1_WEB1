@@ -1,5 +1,7 @@
 import React from 'react';
 import './GroupInfoModal.scss';
+import 'assets/style/_typography.scss';
+import 'assets/style/_flex.scss';
 
 interface Group {
 	id: number;
@@ -27,31 +29,33 @@ const GroupInfoModal: React.FC<Props> = ({ group, onClose, onJoin }) => {
 				className="group-modal-content flex-col"
 				onClick={(e) => e.stopPropagation()}
 			>
-				<div className="group-name-info">{group.name}</div>
+				<div className="group-name-info body1">{group.name}</div>
 
 				<div>
-					<div className="group-modal-value">{group.meetingDays}</div>
-					<div className="group-modal-value">{group.meetingTime}</div>
-					<div className="group-modal-value">{group.meetingTime}</div>
-
-					<div className="group-modal-value">
-						{group.currentMembers} / {group.maxMembers}
+					<div className="group-modal-value body3">{group.meetingDays}</div>
+					<div className="group-modal-value body3">{group.meetingTime}</div>
+					<div className="group-modal-value body3">
+						{group.region ? group.region : '비대면'}
 					</div>
 
-					<div className="group-modal-value">
+					<div className="group-modal-value body3">
+						{`${group.currentMembers} / ${group.maxMembers}명`}
+					</div>
+
+					<div className="group-modal-value body3">
 						{group.category} - {group.type}
 					</div>
 				</div>
 
 				<div className="group-modal-divider" />
 
-				<div className="group-modal-notice">📢 공지사항</div>
+				<div className="group-modal-notice body3">📢 공지사항</div>
 
-				<div className="group-modal-actions flex-row-around">
-					<div className="group-modal-button join" onClick={onJoin}>
+				<div className="group-modal-actions flex-row-between">
+					<div className="group-modal-button join button1" onClick={onJoin}>
 						가입하기
 					</div>
-					<div className="group-modal-button cancel" onClick={onClose}>
+					<div className="group-modal-button cancel button1" onClick={onClose}>
 						취소
 					</div>
 				</div>
