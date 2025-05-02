@@ -2,17 +2,21 @@ import { useState } from 'react';
 import './StudyGroupForm.scss';
 import 'assets/style/_flex.scss';
 import 'assets/style/_typography.scss';
-import { createStudyGroup, Category, Region } from 'api/createGroupFormApi';
+import {
+	createStudyGroup,
+	Category,
+	Region,
+	StudyType,
+} from 'api/createGroupFormApi';
 
 const StudyGroupForm = () => {
 	const [groupName, setGroupName] = useState('');
-	const [meetingType, setMeetingType] = useState<'오프라인' | '온라인' | ''>(
-		'',
-	);
+	const [meetingType, setMeetingType] = useState<StudyType | ''>('');
 	const [meetingTime, setMeetingTime] = useState('');
 	const [meetingCycle, setMeetingCycle] = useState<'월' | '주'>('월');
 	const [meetingDay, setMeetingDay] = useState('');
 	const [memberCount, setMemberCount] = useState('');
+	const [studyTypeDetail, setStudyTypeDetail] = useState('');
 	const [notice, setNotice] = useState('');
 	const [region, setRegion] = useState<Region>(Region.해당없음);
 	const [category, setCategory] = useState<Category>(Category.기타);
@@ -42,8 +46,13 @@ const StudyGroupForm = () => {
 		}
 
 		const members = Number(memberCount);
-		if (!members || members < 2) {
-			alert('최소 인원은 2명 이상이어야 합니다.');
+		if (!members || members < 2 || members > 10) {
+			alert('모집 인원은 2명 이상 10명 이하로 입력해주세요.');
+			return;
+		}
+
+		if (!studyTypeDetail.trim()) {
+			alert('세부 분야를 입력해주세요.');
 			return;
 		}
 
@@ -53,9 +62,10 @@ const StudyGroupForm = () => {
 			notice,
 			meetingDays: `${meetingCycle} ${meetingDay}일`,
 			meetingTime,
+			meetingType,
 			region,
 			category,
-			type: meetingType,
+			type: studyTypeDetail.trim(),
 		};
 
 		try {
@@ -81,35 +91,54 @@ const StudyGroupForm = () => {
 				/>
 			</div>
 
-			<div>
-				<select
-					value={meetingCycle}
-					onChange={(e) => setMeetingCycle(e.target.value as '월' | '주')}
-					className="meeting-period button2"
-				>
-					<option value="월">월</option>
-					<option value="주">주</option>
-				</select>
-				<input
-					type="number"
-					placeholder="숫자 입력"
-					value={meetingDay}
-					onChange={(e) => setMeetingDay(e.target.value)}
-					className="meeting-period-input button2"
-				/>
-				<span className="button2">일</span>
+			<div className="flex-row-between">
+				<div>
+					<select
+						value={meetingCycle}
+						onChange={(e) => setMeetingCycle(e.target.value as '월' | '주')}
+						className="meeting-period button2"
+					>
+						<option value="월">월</option>
+						<option value="주">주</option>
+					</select>
+					<input
+						type="number"
+						placeholder="숫자 입력"
+						value={meetingDay}
+						onChange={(e) => setMeetingDay(e.target.value)}
+						className="meeting-period-input button2"
+						onWheel={(e) => e.currentTarget.blur()}
+						min={1}
+						step={1}
+					/>
+					<span className="button2">일</span>
+				</div>
+				<div>
+					<input
+						type="number"
+						placeholder="모집 인원"
+						value={memberCount}
+						onChange={(e) => setMemberCount(e.target.value)}
+						className="member-count-input button2"
+						onWheel={(e) => e.currentTarget.blur()}
+						min={2}
+						max={10}
+						step={1}
+					/>
+					<span className="button2">명</span>
+				</div>
 			</div>
 
 			<div className="meeting-method">
 				<button
-					onClick={() => setMeetingType('오프라인')}
-					className={`meeting-method-button button2 ${meetingType === '오프라인' ? 'bg-green-300' : ''}`}
+					onClick={() => setMeetingType(StudyType.오프라인)}
+					className={`meeting-method-button button2 ${meetingType === StudyType.오프라인 ? 'bg-green-300' : ''}`}
 				>
 					대면
 				</button>
 				<button
-					onClick={() => setMeetingType('온라인')}
-					className={`meeting-method-button button2 ${meetingType === '온라인' ? 'bg-green-300' : ''}`}
+					onClick={() => setMeetingType(StudyType.온라인)}
+					className={`meeting-method-button button2 ${meetingType === StudyType.온라인 ? 'bg-green-300' : ''}`}
 				>
 					비대면
 				</button>
@@ -127,7 +156,7 @@ const StudyGroupForm = () => {
 				))}
 			</div>
 
-			{meetingType === '온라인' && (
+			{meetingType === StudyType.오프라인 && (
 				<div>
 					<select
 						value={region}
@@ -143,7 +172,7 @@ const StudyGroupForm = () => {
 				</div>
 			)}
 
-			<div>
+			<div className="flex-row-between">
 				<select
 					value={category}
 					onChange={(e) => setCategory(e.target.value as Category)}
@@ -155,15 +184,24 @@ const StudyGroupForm = () => {
 						</option>
 					))}
 				</select>
+				<div>
+					<input
+						type="text"
+						placeholder="세부 분야 입력"
+						value={studyTypeDetail}
+						onChange={(e) => setStudyTypeDetail(e.target.value)}
+						className="study-type-detail-input button2"
+					/>
+				</div>
 			</div>
 
 			<div>
-				<input
-					type="text"
+				<textarea
 					placeholder="공지사항 입력"
 					value={notice}
 					onChange={(e) => setNotice(e.target.value)}
 					className="notice button2"
+					rows={5}
 				/>
 			</div>
 

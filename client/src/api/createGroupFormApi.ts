@@ -36,18 +36,19 @@ export enum Region {
 export enum StudyType {
 	온라인 = '온라인',
 	오프라인 = '오프라인',
-	혼합 = '혼합', //필요하다면...
+	혼합 = '혼합',
 }
 
 interface CreateGroupParams {
-	name: string;
-	maxMembers: number;
-	notice: string;
-	meetingDays: string;
-	meetingTime: string;
-	region: Region;
-	category: Category;
-	type: string;
+	name: string; // 그룹명
+	maxMembers: number; // 최대 멤버 수
+	notice: string; // 공지사항
+	meetingDays: string; // (ex: '월 3일' or '주 2회')
+	meetingTime: string; // (ex: '오전', '저녁' 등)
+	meetingType: StudyType; // 대면/비대면
+	region: Region; // 지역
+	category: Category; // 분야
+	type: string; // 분야 내 세부 유형 (예: 경찰행정)
 }
 
 interface CreateGroupResponse {
