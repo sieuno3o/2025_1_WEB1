@@ -4,50 +4,56 @@
 	width: 100%;
 	margin: auto;
 	background-color: white;
-	padding-bottom: 30px;
 }
 
-.list-box {
-	margin: auto;
-	width: 80%;
-	border: 2px solid $main-color-green;
-	border-radius: 20px;
-	padding: 5%;
-	margin-bottom: 10%;
-	font-size: 14px;
+.list {
+	align-self: flex-start;
+	align-items: flex-start;
+	.first-col {
+		width: 100px;
+	}
 
-	&:hover {
-		cursor: pointer;
-		.group-name {
-			text-decoration: underline;
+	.second-col {
+		width: 200px;
+		.second-col-category {
+			align-items: flex-start;
+		}
+		.button2 {
+			width: 120px;
 		}
 	}
 
+	.info-label {
+		white-space: nowrap;
+	}
+}
+.list-box {
+	height: 100px;
+	margin: auto;
+	width: 78%;
+	border: 1.5px solid $main-color-dark-green;
+	border-radius: 20px;
+	padding: 5%;
+	margin-bottom: 8%;
+
+	&:hover {
+		background-color: #f6ffed;
+		cursor: pointer;
+	}
+
 	.top-row {
-		margin-bottom: 4%;
-
-		.group-name {
-			font-weight: 500;
-			font-size: 14px;
-
-			&:hover {
-				cursor: pointer;
-				text-decoration: underline;
-			}
-		}
-
+		margin-bottom: 3%;
+		height: 16px;
 		.meeting-type {
-			font-size: 10px;
 			color: #888;
 		}
 	}
 
 	.middle-row,
 	.bottom-row {
-		gap: 6%;
-		font-size: 12px;
+		gap: 7%;
 		font-weight: 400;
-		margin-bottom: 2%;
+		margin: 0.5% 0;
 		color: #545454;
 
 		white-space: nowrap;
