@@ -1,11 +1,14 @@
 package com.wap.web1.service;
 
+import com.wap.web1.domain.Attendance;
 import com.wap.web1.domain.StudyGroup;
 import com.wap.web1.domain.StudyMember;
 import com.wap.web1.domain.User;
+import com.wap.web1.dto.AttendanceCalendarDto;
 import com.wap.web1.dto.GroupMembersDto;
 import com.wap.web1.dto.GroupNoticeDto;
 import com.wap.web1.dto.StudyGroupCreateDto;
+import com.wap.web1.repository.AttendanceRepository;
 import com.wap.web1.repository.StudyGroupRepository;
 import com.wap.web1.repository.StudyMemberRepository;
 import com.wap.web1.repository.UserRepository;
@@ -14,12 +17,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class StudyGroupService {
+    private final AttendanceRepository attendanceRepository;
     private final StudyGroupRepository studyGroupRepository;
     private final UserRepository userRepository;
     private final StudyMemberRepository studyMemberRepository;
@@ -89,5 +94,48 @@ public class StudyGroupService {
         StudyGroup group = studyGroupRepository.findById(studyGroupId)
                 .orElseThrow(()->new IllegalArgumentException("스터디 그룹을 찾을 수 없습니다."));
         return new GroupNoticeDto(group.getId(),group.getNotice());
+    }
+
+    @Transactional
+    public void takeAttendance(Long studyGroupId, Long userId) {
+        StudyGroup group = studyGroupRepository.findById(studyGroupId)
+                .orElseThrow(() -> new IllegalArgumentException("스터디그룹을 찾을 수 없습니다"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+
+        StudyMember member = studyMemberRepository.findByStudyGroupAndUser(group, user)
+                .orElseThrow(() -> new IllegalArgumentException("해당 스터디 그룹의 멤버가 아닙니다."));
+
+        LocalDate today= LocalDate.now();
+
+        boolean alreadyChecked = attendanceRepository.existsByStudyGroupAndUserAndDate(group, user, today);
+        if(alreadyChecked){
+            throw new IllegalArgumentException("이미 오늘 출석을 완료했습니다.");
+        }
+
+        //출석 저장
+        Attendance attendance = Attendance.builder()
+                .studyGroup(group)
+                .user(user)
+                .date(today)
+                .status(Attendance.Status.PRESENT)
+                .build();
+        attendanceRepository.save(attendance);
+
+        //출석 횟수 증가
+        member.setAttendanceCount(member.getAttendanceCount() + 1);
+    }
+
+    @Transactional(readOnly = true)
+    public List<AttendanceCalendarDto> getMonthlyAttendance(Long studyGroupId, Long userId, int year, int month){
+        StudyGroup group = studyGroupRepository.findById(studyGroupId)
+                .orElseThrow(() -> new IllegalArgumentException("스터디그룹을 찾을 수 없습니다"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+        List<Attendance> attendances = attendanceRepository.findByStudyGroupAndUserAndMonth(group, user, year, month);
+
+        return attendances.stream()
+                .map(att -> new AttendanceCalendarDto(att.getDate(), att.getStatus()))
+                .collect(Collectors.toList());
     }
 }
