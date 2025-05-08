@@ -6,6 +6,27 @@
 	background-color: white;
 }
 
+.list {
+	align-self: flex-start;
+	align-items: flex-start;
+	.first-col {
+		width: 100px;
+	}
+
+	.second-col {
+		width: 200px;
+		.second-col-category {
+			align-items: flex-start;
+		}
+		.button2 {
+			width: 120px;
+		}
+	}
+
+	.info-label {
+		white-space: nowrap;
+	}
+}
 .list-box {
 	height: 100px;
 	margin: auto;

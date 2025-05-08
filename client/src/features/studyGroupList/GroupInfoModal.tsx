@@ -24,7 +24,7 @@ interface Props {
 
 const GroupInfoModal: React.FC<Props> = ({ group, onClose, onJoin }) => {
 	return (
-		<div className="group-modal-backdrop flex-center">
+		<div className="group-modal-backdrop flex-center" onClick={onClose}>
 			<div
 				className="group-modal-content flex-col"
 				onClick={(e) => e.stopPropagation()}
@@ -35,7 +35,7 @@ const GroupInfoModal: React.FC<Props> = ({ group, onClose, onJoin }) => {
 					<div className="group-modal-value body3">{group.meetingDays}</div>
 					<div className="group-modal-value body3">{group.meetingTime}</div>
 					<div className="group-modal-value body3">
-						{group.region ? group.region : '비대면'}
+						{group.region === '해당없음' ? '비대면' : group.region}
 					</div>
 
 					<div className="group-modal-value body3">

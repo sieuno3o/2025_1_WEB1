@@ -6,6 +6,7 @@ import GroupInfoModal from './GroupInfoModal';
 import joinGroupApi from 'api/joinGroupApi';
 import 'assets/style/_flex.scss';
 import 'assets/style/_typography.scss';
+import './StudyGroupsList.scss';
 
 interface StudyGroupItemProps {
 	group: {
@@ -50,33 +51,36 @@ const StudyGroupItem: React.FC<StudyGroupItemProps> = ({ group }) => {
 		<div className="list-box" onClick={handleClick}>
 			<div className="top-row flex-between">
 				<div className="group-name body3">{group.name}</div>
-				{group.meetingType && (
-					<div className="meeting-type button3">{group.meetingType}</div>
-				)}
 				<span className="meeting-type button3">
-					{group.region?.trim() ? group.region : '비대면'}
+					{group.region?.trim() && group.region !== '해당없음'
+						? group.region
+						: '비대면'}
 				</span>
 			</div>
-			<div className="middle-row flex-row button1">
-				<div>
-					<span className="info-label">주기</span> {group.meetingDays}
+			<div className="flex-left list">
+				<div className="first-col flex-col">
+					<div className="flex-left first-col-meetingdays">
+						<span className="info-label button1">주기</span>
+						<div className="button2">{group.meetingDays}</div>
+					</div>
+					<div className="flex-left first-col-member">
+						<span className="info-label button1">인원</span>{' '}
+						<div className="button2">
+							{group.currentMembers} / {group.maxMembers}명
+						</div>
+					</div>
 				</div>
-				<div>
-					<span className="info-label"> &nbsp;&nbsp;시간</span>{' '}
-					{group.meetingTime}
+				<div className="second-col flex-col">
+					<div className="flex-left second-col-time">
+						<span className="info-label button1">시간</span>
+						<div className="button2">{group.meetingTime}</div>
+					</div>
+					<div className="flex-left second-col-category">
+						<span className="info-label button1">{group.category}</span>{' '}
+						<div className="button2">{group.type}</div>
+					</div>
 				</div>
 			</div>
-			<div className="bottom-row flex-row button1">
-				<div>
-					<span className="info-label button1">인원</span>{' '}
-					{group.currentMembers} / {group.maxMembers}명
-				</div>
-				<div>
-					<span className="info-label">{group.category}</span> {group.type}
-				</div>
-			</div>
-
-			<div className="bottom-row flex-row"></div>
 
 			<LoginModal
 				visible={showModal}
