@@ -1,9 +1,6 @@
 package com.wap.web1.service;
 
-import com.wap.web1.domain.Attendance;
-import com.wap.web1.domain.StudyGroup;
-import com.wap.web1.domain.StudyMember;
-import com.wap.web1.domain.User;
+import com.wap.web1.domain.*;
 import com.wap.web1.dto.AttendanceCalendarDto;
 import com.wap.web1.dto.GroupMembersDto;
 import com.wap.web1.dto.GroupNoticeDto;
@@ -37,6 +34,12 @@ public class StudyGroupService {
         User leader = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("리더 유저를 찾을 수 없습니다."));
 
+        if (dto.getMaxMembers() < 3) {
+            throw new IllegalArgumentException("스터디 최소 인원은 3명 이상이어야 합니다.");
+        }
+
+        Region region = dto.getRegion() != null ? dto.getRegion() : Region.해당없음;
+
         //스터디 그룹 생성
         StudyGroup group = StudyGroup.builder()
                 .name(dto.getName())
@@ -46,9 +49,11 @@ public class StudyGroupService {
                 .meetingDays(dto.getMeetingDays())
                 .meetingTime(dto.getMeetingTime())
                 .meetingType(dto.getMeetingType())
-                .region(dto.getRegion())
+                .region(region)
                 .category(dto.getCategory())
                 .type(dto.getType())
+                .startDate(dto.getStartDate())
+                .recruitStatus(RecruitStatus.RECRUITING)// 기본값으로 모집중
                 .build();
 
         studyGroupRepository.save(group);
