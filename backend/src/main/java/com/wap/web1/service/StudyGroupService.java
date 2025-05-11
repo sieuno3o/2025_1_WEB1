@@ -5,10 +5,7 @@ import com.wap.web1.dto.AttendanceCalendarDto;
 import com.wap.web1.dto.GroupMembersDto;
 import com.wap.web1.dto.GroupNoticeDto;
 import com.wap.web1.dto.StudyGroupCreateDto;
-import com.wap.web1.repository.AttendanceRepository;
-import com.wap.web1.repository.StudyGroupRepository;
-import com.wap.web1.repository.StudyMemberRepository;
-import com.wap.web1.repository.UserRepository;
+import com.wap.web1.repository.*;
 import com.wap.web1.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +25,7 @@ public class StudyGroupService {
     private final StudyGroupRepository studyGroupRepository;
     private final UserRepository userRepository;
     private final StudyMemberRepository studyMemberRepository;
+    private final StudyRankingRepository studyRankingRepository;
     @Transactional
     public Response createStudyGroup(StudyGroupCreateDto dto, Long userId){
         if (studyGroupRepository.findByName(dto.getName()).isPresent()){
@@ -77,16 +78,36 @@ public class StudyGroupService {
         StudyGroup group = studyGroupRepository.findById(studyGroupId)
                 .orElseThrow(() -> new IllegalArgumentException("스터디그룹을 찾을 수 없습니다"));
 
+        List<StudyRanking> rankings = studyRankingRepository.findByStudyMember_StudyGroupId(studyGroupId);
+
+        //랭킹 정보를 Map<studyMemberId, ranking>으로 변환
+        Map<Long, Integer> memberIdToRankMap = rankings.stream()
+                .collect(Collectors.toMap(
+                        r -> r.getStudyMember().getId(),
+                        StudyRanking::getRanking
+                ));
+
         List<StudyMember> members = studyMemberRepository.findByStudyGroupId(studyGroupId);
 
         List<GroupMembersDto.MemberDto> memberDtos = members.stream()
                 .filter(member -> member.getStatus() == StudyMember.Status.ACTIVE)
-                .map(member -> GroupMembersDto.MemberDto.builder()
-                        .userId(member.getUser().getId())
-                        .nickname(member.getUser().getNickname())
-                        .profileImage(member.getUser().getProfileImage())
-                        .build())
+                .map(member -> {
+                    int rank = memberIdToRankMap.getOrDefault(member.getId(), 0);
+                    String profileImage = switch (rank){
+                        case 1 -> "icon1.png";//임시 아이콘임 나중에 디자이너분께 프사받아서 이름 수정필요
+                        case 2 -> "icon2.png";
+                        case 3 -> "icon3.png";
+                        default -> "icon4.png";
+                    };
+
+                    return GroupMembersDto.MemberDto.builder()
+                            .userId(member.getUser().getId())
+                            .nickname(member.getUser().getNickname())
+                            .profileImage(profileImage)
+                            .build();
+                })
                 .collect(Collectors.toList());
+
 
         return GroupMembersDto.builder()
                 .studyGroupId(group.getId())
@@ -142,5 +163,12 @@ public class StudyGroupService {
         return attendances.stream()
                 .map(att -> new AttendanceCalendarDto(att.getDate(), att.getStatus()))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public String getGroupName(Long studyGroupId){
+        return studyGroupRepository.findById(studyGroupId)
+                .orElseThrow(()-> new IllegalArgumentException("스터디 그룹을 찾을 수 없습니다."))
+                .getName();
     }
 }

@@ -62,6 +62,12 @@ public class StudyGroupController {
                 studyGroupId, currentUser.getUser().getId(), year, month);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/{studyGroupId}/name")
+    public ResponseEntity<String> getStudyGroupName(@PathVariable Long studyGroupId){
+        String name = studyGroupService.getGroupName(studyGroupId);
+        return ResponseEntity.ok(name);
+    }
 }
 
 
