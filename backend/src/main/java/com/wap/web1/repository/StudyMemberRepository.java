@@ -28,4 +28,6 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> 
     @Modifying
     @Query("UPDATE StudyMember sm SET sm.AttendanceCount = 0")
     void resetAllweeklyAttendance();
+
+    int countByStudyGroupIdAndStatus(Long studyGroupId, StudyMember.Status status);
 }
