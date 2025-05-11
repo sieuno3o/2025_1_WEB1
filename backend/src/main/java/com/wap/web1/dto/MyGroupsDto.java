@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 public class MyGroupsDto {
     private Long id;
-    private List<GroupPreviewDto> studygroups;
+    private List<MyStudyGroupDto> studygroups;
 }
