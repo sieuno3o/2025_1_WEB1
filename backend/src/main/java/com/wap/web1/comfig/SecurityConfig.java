@@ -8,6 +8,7 @@ import com.wap.web1.repository.RefreshRepository;
 import com.wap.web1.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -59,6 +60,7 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/", "/auth/login", "/auth/reissue", "/auth/join").permitAll()  // /auth/login 경로 허용
                         .requestMatchers("/auth/logout").permitAll()
                         .requestMatchers("/api/main/{study_group_id}/join","/api/main/grouplist","/grouplist/search/**").permitAll()
