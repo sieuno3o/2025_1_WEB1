@@ -30,4 +30,5 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> 
     void resetAllweeklyAttendance();
 
     int countByStudyGroupIdAndStatus(Long studyGroupId, StudyMember.Status status);
+
 }
