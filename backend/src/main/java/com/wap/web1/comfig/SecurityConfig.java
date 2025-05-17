@@ -20,6 +20,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+
 
 import java.util.Arrays;
 
@@ -66,7 +69,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/main/{study_group_id}/join","/api/main/grouplist","/grouplist/search/**").permitAll()
                         .requestMatchers("/api/main/test").permitAll() // 테스트용
                         .anyRequest().authenticated()
+                ).oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())) // ✅ 여기가 핵심
                 );
+
 
         // LoginFilter를 /auth/login 경로에 적용
         http
@@ -98,4 +104,16 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthorityPrefix(""); // "ROLE_" 접두어 유지
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("role"); // JWT claim 이름 설정
+
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return converter;
+    }
+
 }
