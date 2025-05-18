@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Map;
+
 
 @Service
 @RequiredArgsConstructor
@@ -40,12 +42,21 @@ public class UserService {
     public MyGroupsDto getMyGroups(Long userId){
         List<StudyMember> memberships = studyMemberRepository.findByUserId(userId);
 
-        List<MyStudyGroupDto> studyGroups = memberships.stream()
-                .map(member -> {
-                    StudyGroup group = member.getStudyGroup();
-                    int currentMembers = studyMemberRepository.countByStudyGroupIdAndStatus(
-                            group.getId(), StudyMember.Status.ACTIVE);
+        List<StudyGroup> groups = memberships.stream()
+                .map(StudyMember::getStudyGroup)
+                .toList();
 
+        List<Long> groupIds = groups.stream()
+                .map(StudyGroup::getId)
+                .toList();
+
+        Map<Long, Long> memberCountMap = studyMemberRepository
+                .countActiveMembersByGroupIds(groupIds).stream()
+                .collect(Collectors.toMap(GroupMemberCount::getGroupId, GroupMemberCount::getCount));
+
+        List<MyStudyGroupDto> studyGroups = groups.stream()
+                .map(group -> {
+                    int currentMembers = memberCountMap.getOrDefault(group.getId(), 0L).intValue();
                     return MyStudyGroupDto.builder()
                             .id(group.getId())
                             .name(group.getName())
