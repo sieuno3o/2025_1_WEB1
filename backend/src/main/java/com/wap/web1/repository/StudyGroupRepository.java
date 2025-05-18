@@ -1,6 +1,7 @@
 package com.wap.web1.repository;
 
 import com.wap.web1.domain.Category;
+import com.wap.web1.domain.RecruitStatus;
 import com.wap.web1.domain.Region;
 import com.wap.web1.domain.StudyGroup;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,8 @@ import java.util.Optional;
 
 public interface StudyGroupRepository extends JpaRepository<StudyGroup,Long> {
     Optional<StudyGroup> findByName(String name);
+
+    List<StudyGroup> findByRecruitStatus(RecruitStatus recruitStatus);
 
     // 그룹리스트 ( 필터링 + 정원체크 )
     @Query("SELECT sg FROM StudyGroup sg " +
@@ -44,4 +47,5 @@ public interface StudyGroupRepository extends JpaRepository<StudyGroup,Long> {
             @Param("regions") List<Region> regions,
             @Param("cursor") Long cursor,
             Pageable pageable);
+
 }

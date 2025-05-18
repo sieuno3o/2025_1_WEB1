@@ -1,15 +1,15 @@
 package com.wap.web1.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class MyInfoDto {
-    private Long id;
-    private String email;
+public class MyInfoUpdateDto {
     private String nickname;
     private String profileImage;
 }
