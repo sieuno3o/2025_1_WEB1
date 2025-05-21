@@ -5,15 +5,18 @@ import Profile from 'features/myPage/Profile';
 // import JoinGroupList from 'features/myPage/JoinGroupList';
 import '../features/header/Header.scss';
 import StudyGroupsList from 'features/studyGroupList/StudyGroupsList';
+import { useMyGroupIds } from 'hooks/useMyGroupIds';
 
 const MyPage = () => {
+	const { myGroupIds } = useMyGroupIds();
+
 	return (
 		<div>
 			<div className="my-page-wrapper">
 				<Header title="마이페이지" showLogo={false} />
 			</div>
 			<Profile />
-			<StudyGroupsList searchResults={null} />
+			<StudyGroupsList searchResults={null} myGroupIds={myGroupIds} />
 			<LogoutButton />
 			<NavBar />
 		</div>
