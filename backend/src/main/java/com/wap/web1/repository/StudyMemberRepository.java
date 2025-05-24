@@ -42,3 +42,4 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> 
             "WHERE sm.status = 'ACTIVE' AND sm.studyGroup.id IN :groupIds " +
             "GROUP BY sm.studyGroup.id")
     List<GroupMemberCount> countActiveMembersByGroupIds(@Param("groupIds") List<Long> groupIds);
+}
