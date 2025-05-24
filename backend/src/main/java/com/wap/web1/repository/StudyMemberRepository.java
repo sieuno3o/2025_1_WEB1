@@ -31,4 +31,6 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> 
 
     int countByStudyGroupIdAndStatus(Long studyGroupId, StudyMember.Status status);
 
+    Optional<StudyMember> findByStudyGroupIdAndUserId(Long studyGroupId, Long userId);
+
 }

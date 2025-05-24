@@ -49,6 +49,16 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/studygroups/{studyGroupId}/kick/{targetuserId}")
+    public ResponseEntity<Response> kickUserFromGroup(
+            @PathVariable Long studyGroupId,
+            @PathVariable Long targetUserId,
+            @CurrentUser CustomUserDetails currentUser
+    ) {
+        Long userId = currentUser.getUser().getId();
+        Response response = userService.kickUserFromGroup(studyGroupId, userId, targetUserId);
+        return ResponseEntity.ok(response);
+    }
 }
 
 

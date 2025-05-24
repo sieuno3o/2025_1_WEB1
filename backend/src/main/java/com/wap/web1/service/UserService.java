@@ -109,4 +109,29 @@ public class UserService {
         return new Response("내 정보가 성공적으로 수정되었습니다.");
     }
 
+    @Transactional
+    public Response kickUserFromGroup(Long studyGroupId, Long userId, Long targetUserId){
+        StudyGroup group = studyGroupRepository.findById(studyGroupId)
+                .orElseThrow(()-> new IllegalArgumentException("스터디그룹을 찾을 수 없습니다."));
+
+        if (!group.getLeader().getId().equals(userId)){
+            throw new IllegalArgumentException("방장만 멤버를 강퇴할 수 있습니다.");
+        }
+
+        if (group.getLeader().getId().equals(targetUserId)){
+            throw new IllegalArgumentException("방장은 자신을 강퇴할 수 없습니다.");
+        }
+
+        StudyMember member = studyMemberRepository.findByStudyGroupIdAndUserId(studyGroupId, targetUserId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자는 스터디 멤버가 아닙니다."));
+
+        // 이미 비활성화된 사용자 확인
+        if (member.getStatus() != StudyMember.Status.ACTIVE) {
+            throw new IllegalArgumentException("이미 강퇴되었거나 탈퇴한 사용자입니다.");
+        }
+        // 상태를 BANNED로 설정
+        member.setStatus(StudyMember.Status.BANNED);
+
+        return new Response("사용자가 성공적으로 강퇴었습니다.");
+    }
 }
