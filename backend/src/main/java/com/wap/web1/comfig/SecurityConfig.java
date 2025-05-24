@@ -66,11 +66,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/", "/auth/login", "/auth/reissue", "/auth/join").permitAll()  // /auth/login 경로 허용
                         .requestMatchers("/auth/logout").permitAll()
-                        .requestMatchers("/api/main/{study_group_id}/join","/api/main/grouplist","/grouplist/search/**").permitAll()
+                        .requestMatchers("/api/main/grouplist","/grouplist/search/**").permitAll()
                         .requestMatchers("/api/main/test").permitAll() // 테스트용
                         .anyRequest().authenticated()
-                ).oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())) // ✅ 여기가 핵심
                 );
 
 
