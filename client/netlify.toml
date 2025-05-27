@@ -1,3 +1,24 @@
 [build]
     command = "CI= npm run build"
     publish = "build"
+
+# /api/* → http://3.37.248.236:8080/api/*
+[[redirects]]
+  from = "/api/*"
+  to = "http://3.37.248.236:8080/api/:splat"
+  status = 200
+  force = true
+
+# /auth/* → http://3.37.248.236:8080/auth/*
+[[redirects]]
+  from = "/auth/*"
+  to = "http://3.37.248.236:8080/auth/:splat"
+  status = 200
+  force = true
+
+# /grouplist/* → http://3.37.248.236:8080/grouplist/*
+[[redirects]]
+  from = "/grouplist/*"
+  to = "http://3.37.248.236:8080/grouplist/:splat"
+  status = 200
+  force = true
