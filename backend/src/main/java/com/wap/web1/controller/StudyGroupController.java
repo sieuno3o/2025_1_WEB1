@@ -1,16 +1,16 @@
 package com.wap.web1.controller;
 
 import com.wap.web1.comfig.CurrentUser;
-import com.wap.web1.dto.CustomUserDetails;
-import com.wap.web1.dto.GroupMembersDto;
-import com.wap.web1.dto.GroupNoticeDto;
-import com.wap.web1.dto.StudyGroupCreateDto;
+import com.wap.web1.domain.Attendance;
+import com.wap.web1.dto.*;
 import com.wap.web1.response.Response;
 import com.wap.web1.service.StudyGroupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/studygroup")
@@ -39,6 +39,43 @@ public class StudyGroupController {
     @GetMapping("/{studyGroupId}/notice")
     public ResponseEntity<GroupNoticeDto> getNotice(@PathVariable Long studyGroupId){
         GroupNoticeDto response = studyGroupService.getNotice(studyGroupId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("{studyGroupId}/attendance")
+    public ResponseEntity<Response> takeAttendance(
+            @PathVariable Long studyGroupId,
+            @CurrentUser CustomUserDetails currentUser
+    ) {
+        studyGroupService.takeAttendance(studyGroupId, currentUser.getUser().getId());
+        return ResponseEntity.ok(new Response("출석 완료"));
+    }
+
+    @GetMapping("{studyGroupId}/attendance/calendar")
+    public ResponseEntity<List<AttendanceCalendarDto>> getMonthlyAttendance(
+        @PathVariable Long studyGroupId,
+        @RequestParam int year,
+        @RequestParam int month,
+        @CurrentUser CustomUserDetails currentUser
+    ) {
+        List<AttendanceCalendarDto> result = studyGroupService.getMonthlyAttendance(
+                studyGroupId, currentUser.getUser().getId(), year, month);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{studyGroupId}/name")
+    public ResponseEntity<String> getStudyGroupName(@PathVariable Long studyGroupId){
+        String name = studyGroupService.getGroupName(studyGroupId);
+        return ResponseEntity.ok(name);
+    }
+
+    @DeleteMapping("{studyGroupId}/leave")
+    public ResponseEntity<Response> leaveStudyGroup(
+            @PathVariable Long studyGroupId,
+            @CurrentUser CustomUserDetails currentUser
+    ){
+        Long userId = currentUser.getUser().getId();
+        Response response = studyGroupService.leaveStudyGroup(studyGroupId, userId);
         return ResponseEntity.ok(response);
     }
 }

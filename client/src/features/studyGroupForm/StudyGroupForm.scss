@@ -93,7 +93,7 @@
 	.notice {
 		width: 100%;
 		height: 100px;
-		padding: 10px 4px;
+		padding: 10px 3px;
 		border: none;
 		border-bottom: 1px solid $main-color-green;
 		outline: none;
@@ -116,12 +116,11 @@
 	}
 
 	.study-type-detail-input {
-		width: 100%;
+		width: 68%;
 		border: none;
 		border-bottom: 1px solid $main-color-green;
 		outline: none;
 		padding: 0.5rem 0;
-		margin-right: 35px;
 	}
 
 	.member-count-input {
@@ -146,6 +145,18 @@
 
 		&:hover {
 			background-color: darken($main-color-deep-green, 10%);
+		}
+	}
+
+	.notice-length {
+		color: #909090;
+	}
+	.start-date-section {
+		input[type='date'] {
+			border: none;
+			border-bottom: 1px solid $main-color-green;
+			padding: 3px;
+			width: 47%;
 		}
 	}
 }

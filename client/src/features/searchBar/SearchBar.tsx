@@ -1,26 +1,58 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Search } from 'lucide-react';
 import { searchGroups, SearchGroupResponse } from 'api/searchFilterApi';
 import './SearchBar.scss';
 import 'assets/style/_flex.scss';
 import 'assets/style/_typography.scss';
 
-const SearchBar = () => {
-	const [keyword, setKeyword] = useState('');
-	const [results, setResults] = useState<SearchGroupResponse | null>(null);
+interface SearchBarProps {
+	onSearchResult: (results: SearchGroupResponse | null) => void;
+}
 
-	const handleSearch = async () => {
-		if (!keyword.trim()) {
-			alert('검색어를 입력해주세요.');
-			return;
+const SearchBar: React.FC<SearchBarProps> = ({ onSearchResult }) => {
+	const [keyword, setKeyword] = useState('');
+	const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+
+	useEffect(() => {
+		if (debounceTimer.current) {
+			clearTimeout(debounceTimer.current);
 		}
 
-		try {
-			const response = await searchGroups({ keyword });
-			setResults(response);
-			console.log(response);
-		} catch (error) {
-			console.error(error);
+		debounceTimer.current = setTimeout(() => {
+			if (!keyword.trim()) {
+				onSearchResult(null);
+				return;
+			}
+
+			searchGroups({ keyword })
+				.then((response) => onSearchResult(response))
+				.catch((error) => {
+					console.error('검색 중 오류 발생:', error);
+					onSearchResult(null);
+				});
+		}, 10);
+
+		return () => {
+			if (debounceTimer.current) {
+				clearTimeout(debounceTimer.current);
+			}
+		};
+	}, [keyword]);
+
+	// ⌨️ 엔터 키 검색
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			if (!keyword.trim()) {
+				onSearchResult(null);
+				return;
+			}
+
+			searchGroups({ keyword })
+				.then((response) => onSearchResult(response))
+				.catch((error) => {
+					console.error('검색 중 오류 발생:', error);
+					onSearchResult(null);
+				});
 		}
 	};
 
@@ -35,24 +67,10 @@ const SearchBar = () => {
 						className="searchbar-input flex-row-center body3"
 						value={keyword}
 						onChange={(e) => setKeyword(e.target.value)}
-						onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+						onKeyDown={handleKeyDown}
 					/>
 				</div>
 			</div>
-
-			{/* {results && results.groups && (
-				<div className="search-results">
-					{results.groups.map((group) => (
-						<div key={group.id} className="search-result-item">
-							{group.name}
-						</div>
-					))}
-				</div>
-			)} */}
-
-			{results && results.message && (
-				<div className="search-message">{results.message}</div>
-			)}
 		</div>
 	);
 };
