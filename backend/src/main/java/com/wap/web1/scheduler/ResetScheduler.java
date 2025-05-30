@@ -6,8 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Component
@@ -20,6 +23,7 @@ public class ResetScheduler {
     private final WeeklyGoalRepository weeklyGoalRepository;
     private final WeeklySubGoalRepository weeklySubGoalRepository;
     private final WeeklyPeriodRepository weeklyPeriodRepository;
+    private final StudyMemberRepository studyMemberRepository;
 
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void resetWeeklyData() {
@@ -49,6 +53,28 @@ public class ResetScheduler {
             weeklyGoalRepository.deleteAll(weeklyGoals);
 
             log.info("[리셋 완료] 그룹 ID: {}, 주차: {} ~ {}", groupId, period.getStartDate(), period.getEndDate());
+        }
+    }
+
+
+    @Scheduled(cron = "0 0 0 * * *")
+    @Transactional
+    public void resetProgressForEndedPeriods() {
+        ZoneId kst = ZoneId.of("Asia/Seoul");
+        LocalDate today = ZonedDateTime.now(kst).toLocalDate();
+
+        List<WeeklyPeriod> endedPeriods = weeklyPeriodRepository.findAllByEndDate(today.minusDays(1));
+
+        if(endedPeriods.isEmpty()) return;
+
+        for(WeeklyPeriod period : endedPeriods) {
+            List<StudyMember> members = studyMemberRepository.findByStudyGroupId(period.getStudyGroup().getId());
+            for(StudyMember member : members) {
+                member.setProgress(0);
+            }
+            studyMemberRepository.saveAll(members);
+            log.info("Reset progress for group {}, period {} ~ {}",
+                    period.getStudyGroup().getId(),period.getStartDate(),period.getEndDate());
         }
     }
 }
