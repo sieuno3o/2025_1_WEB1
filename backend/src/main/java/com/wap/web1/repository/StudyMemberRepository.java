@@ -26,6 +26,8 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> 
 
     Optional<StudyMember> findByStudyGroupAndUser(StudyGroup studyGroup, User user);
 
+    Optional<StudyMember> findByUserIdAndStudyGroupId(Long userId, Long studyGroupId);
+
     //매주 초기화
     @Modifying
     @Query("UPDATE StudyMember sm SET sm.AttendanceCount = 0")
