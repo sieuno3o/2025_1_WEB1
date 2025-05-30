@@ -8,7 +8,6 @@ import com.wap.web1.repository.MemberWeeklyPlanRepository;
 import com.wap.web1.repository.StudyMemberRepository;
 import com.wap.web1.repository.WeeklyPeriodRepository;
 import com.wap.web1.repository.WeeklySubGoalRepository;
-import com.wap.web1.util.WeeklyPeriodCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +31,7 @@ public class MemberWeeklyPlanService {
     private final WeeklySubGoalRepository subGoalRepository;
     private final StudyMemberRepository studyMemberRepository;
     private final WeeklyPeriodRepository weeklyPeriodRepository;
+    private final ProgressService progressService;
 
     @Transactional
     public WeeklyPlanResponse createOrUpdatePlans(User user, Long groupId, List<WeeklyPlanRequest.MemberGoalPlan> requests) {
@@ -106,8 +106,8 @@ public class MemberWeeklyPlanService {
         plan.markCompleted(completed, now);
         memberWeeklyPlanRepository.save(plan);
 
-        /*진행도 업데이트
-        progressService.updateProgressRate(member, plan.getWeeklyPeriod());*/
+        // 진행도 업데이트
+        progressService.updateProgressRate(member, plan.getWeeklyPeriod());
 
         return autoCompleteWeeklyGoal(member, plan.getWeeklySubGoal().getWeeklyGoal().getId(), now, completed);
     }
