@@ -8,11 +8,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface StudyRankingRepository extends JpaRepository<StudyRanking, Long> {
+public interface StudyRankingRepository extends JpaRepository<StudyRanking, Long>, StudyRankingRepositoryCustom {
     List<StudyRanking> findByStudyMember_StudyGroupId(Long studyGroupId);
 
     @Modifying
     @Query("DELETE FROM StudyRanking sr WHERE sr.studyMember.studyGroup.id = :studyGroupId")
     void deleteAllByStudyGroupId(@Param("studyGroupId") Long studyGroupId);
+
+    void deleteByWeeklyPeriodIdAndStudyGroupId(Long periodId, Long groupId);
+
 
 }
