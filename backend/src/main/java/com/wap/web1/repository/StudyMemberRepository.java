@@ -28,13 +28,12 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> 
 
     Optional<StudyMember> findByUserIdAndStudyGroupId(Long userId, Long studyGroupId);
 
+    int countByStudyGroup_IdAndStatus(Long studyGroupId, StudyMember.Status status);
+
     //매주 초기화
     @Modifying
     @Query("UPDATE StudyMember sm SET sm.AttendanceCount = 0")
     void resetAllweeklyAttendance();
-
-    int countByStudyGroupIdAndStatus(Long studyGroupId, StudyMember.Status status);
-
 
     Optional<StudyMember> findByStudyGroupIdAndUserId(Long studyGroupId, Long userId);
 
