@@ -58,7 +58,7 @@ public class RankingService {
         boolean allZero = rankings.stream().allMatch(dto -> dto.getCompletedCount() == 0);
 
         Map<Long, Integer> memberIdToRanking = new LinkedHashMap<>();
-        Map<Long, StudyRanking.RankLevel> memberIdToRankLevel = new HashMap<>();
+        Map<Long, Integer > memberIdToRankLevel = new HashMap<>();
 
         int currentRank = 1;
         int realRank = 1;
@@ -83,9 +83,8 @@ public class RankingService {
         for(MemberRankingDto dto : rankings) {
             Long memberId = dto.getMemberId();
             int rank = memberIdToRanking.get(memberId);
-            StudyRanking.RankLevel level = allZero
-                    ? StudyRanking.RankLevel.D
-                    :getRankLevel(rank,totalMembers);
+
+            int rankLevel = allZero ? 4 : getNumerickRankLevel(rank);
 
             StudyMember studyMember = studyMemberRepository.findById(memberId)
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 멤버 ID: " + memberId));
@@ -96,7 +95,7 @@ public class RankingService {
                     .studyMember(studyMember)
                     .completedSubGoals(dto.getCompletedCount().intValue())
                     .ranking(rank)
-                    .rankLevel(level)
+                    .rankLevel(rankLevel)
                     .build();
 
             studyRankingRepository.save(studyRanking);
@@ -109,7 +108,7 @@ public class RankingService {
                     .nickname(dto.getNickname())
                     .completedSubGoals(dto.getCompletedCount().intValue())
                     .ranking(rank)
-                    .rankLevel(level)
+                    .rankLevel(rankLevel)
                     .build();
             result.add(rankDto);
         }
@@ -130,18 +129,7 @@ public class RankingService {
         return studyRankingRepository.findRankingDtos(weeklyPeriod.getId(),studyGroupId);
     }
 
-    private StudyRanking.RankLevel getRankLevel(int rank, int totalMembers) {
-        if(totalMembers == 3) {
-            return switch (rank) {
-                case 0 -> StudyRanking.RankLevel.A;
-                case 1 -> StudyRanking.RankLevel.B;
-                default -> StudyRanking.RankLevel.C;
-            };
-        }
-        int quartile = (int) Math.ceil(totalMembers / 4.0);
-        if(rank < quartile) return StudyRanking.RankLevel.A;
-        if(rank < quartile * 2) return StudyRanking.RankLevel.B;
-        if(rank < quartile * 3) return StudyRanking.RankLevel.C;
-        return StudyRanking.RankLevel.D;
+    private int getNumerickRankLevel(int ranking) {
+        return ranking >= 4 ? 4: ranking;
     }
 }

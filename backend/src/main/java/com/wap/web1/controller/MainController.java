@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/main")
@@ -32,9 +34,11 @@ public class MainController {
     @GetMapping("/grouplist")
     public StudyGroupResponse<StudyGroupWithMemberCountDto> getStudyGroups(
             @RequestParam(required = false) Long cursor,
-            @RequestParam(defaultValue = "7") int size
-    ) {
-        return studyGroupListService.getStudyGroups(cursor, size);
+            @RequestParam(defaultValue = "7") int size,
+            @RequestParam(required = false) List<String> category,
+            @RequestParam(required = false) List<String> region) {
+
+        return studyGroupListService.getStudyGroups(cursor, size, category, region);
     }
 
     @GetMapping("/test")

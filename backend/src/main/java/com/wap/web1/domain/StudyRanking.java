@@ -30,14 +30,9 @@ public class StudyRanking {
     private StudyMember studyMember;
 
     // 해당 주차에 완료한 소목표 수
-    private int completedSubGoals;
+    private Integer completedSubGoals;
 
-    @Enumerated(EnumType.STRING)
-    private RankLevel rankLevel;
+    private Integer rankLevel;
 
     private Integer ranking;
-
-    public enum RankLevel {
-        A, B, C, D
-    }
 }

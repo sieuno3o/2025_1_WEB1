@@ -1,3 +1,5 @@
+
+
 package com.wap.web1.service;
 
 import com.wap.web1.dto.StudyGroupResponse;
@@ -16,9 +18,11 @@ public class StudyGroupListService {
         this.studyGroupRepository = studyGroupRepository;
     }
 
-    public StudyGroupResponse<StudyGroupWithMemberCountDto> getStudyGroups(Long cursor, int size) {
+    public StudyGroupResponse<StudyGroupWithMemberCountDto> getStudyGroups(
+            Long cursor, int size, List<String> categories, List<String> regions) {
+
         List<StudyGroupWithMemberCountDto> studyGroups =
-                studyGroupRepository.findStudyGroupsWithMemberCount(cursor, size);
+                studyGroupRepository.findStudyGroupsWithMemberCount(cursor, size, categories, regions);
 
         if (studyGroups.isEmpty()) {
             return StudyGroupResponse.of("해당 데이터가 없습니다.");
@@ -27,4 +31,3 @@ public class StudyGroupListService {
         return StudyGroupMapper.convertToResponseWithCountDto(studyGroups, size);
     }
 }
-
