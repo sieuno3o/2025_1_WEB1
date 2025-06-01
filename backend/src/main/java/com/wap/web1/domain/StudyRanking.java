@@ -30,7 +30,7 @@ public class StudyRanking {
     private StudyMember studyMember;
 
     // 해당 주차에 완료한 소목표 수
-    private Integer completedSubGoals;
+    private Integer completedSubGoals = 0;
 
     private Integer rankLevel;
 

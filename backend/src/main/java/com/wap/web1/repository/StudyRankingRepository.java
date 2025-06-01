@@ -15,5 +15,9 @@ public interface StudyRankingRepository extends JpaRepository<StudyRanking, Long
     @Query("DELETE FROM StudyRanking sr WHERE sr.studyMember.studyGroup.id = :studyGroupId")
     void deleteAllByStudyGroupId(@Param("studyGroupId") Long studyGroupId);
 
-    void deleteByWeeklyPeriodIdAndStudyGroupId(Long periodId, Long groupId);
+    @Modifying
+    @Query("DELETE FROM StudyRanking sr WHERE sr.weeklyPeriod.id = :weeklyPeriodId AND sr.studyGroup.id = :studyGroupId")
+    int deleteByWeeklyPeriodAndStudyGroup(@Param("weeklyPeriodId") Long weeklyPeriodId,
+                                          @Param("studyGroupId") Long studyGroupId);
+
 }

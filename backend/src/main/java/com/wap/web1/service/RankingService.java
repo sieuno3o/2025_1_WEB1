@@ -9,11 +9,13 @@ import com.wap.web1.dto.StudyRankDto;
 import com.wap.web1.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,8 +45,9 @@ public class RankingService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹 ID: " + studyGroupId));
 
         // 기존 랭킹 삭제
-        studyRankingRepository.deleteByWeeklyPeriodIdAndStudyGroupId(weeklyPeriod.getId(),studyGroupId);
-
+        int deletedCount = studyRankingRepository
+                .deleteByWeeklyPeriodAndStudyGroup(weeklyPeriod.getId(),studyGroupId);
+        log.info("[삭제된 기존 랭킹 수] {}", deletedCount);
 
         List<MemberRankingDto> rankings = memberWeeklyPlanRepository
                 .getWeeklyRankingForGroup(
@@ -52,21 +55,31 @@ public class RankingService {
                         weeklyPeriod.getStartDate(),
                         weeklyPeriod.getEndDate());
 
-        if(rankings.isEmpty()) return Collections.emptyList();
+        List<StudyMember> allMembers = studyMemberRepository.findByStudyGroupId(studyGroupId);
 
-        int totalMembers = rankings.size();
+        Map<Long, Long> memberIdToCompletedCount = rankings.stream()
+                .collect(Collectors.toMap(MemberRankingDto::getMemberId, MemberRankingDto::getCompletedCount));
+
+        for(StudyMember member : allMembers) {
+            memberIdToCompletedCount.putIfAbsent(member.getId(),0L);
+        }
+
+        List<MemberRankingDto> sortedRankings = memberIdToCompletedCount.entrySet().stream()
+                .sorted((e1,e2) -> Long.compare(e2.getValue(), e1.getValue())) //완료된 소목표 수 기준 내림차순 정렬
+                .map(e -> new MemberRankingDto(e.getKey(),"",e.getValue()))//닉네임은 빈 문자열로 설정
+                .collect(Collectors.toList());
+
+        // 모든 멤버의 completedSubGoals가 0인지 확인
         boolean allZero = rankings.stream().allMatch(dto -> dto.getCompletedCount() == 0);
 
         Map<Long, Integer> memberIdToRanking = new LinkedHashMap<>();
-        Map<Long, Integer > memberIdToRankLevel = new HashMap<>();
-
         int currentRank = 1;
         int realRank = 1;
         Long lastCount = null;
 
         // 랭킹 계산( 동점자 처리 포함)
-        for(int i = 0; i < totalMembers; i++) {
-            MemberRankingDto dto = rankings.get(i);
+        for(int i = 0; i < sortedRankings.size(); i++) {
+            MemberRankingDto dto = sortedRankings.get(i);
             Long completed = dto.getCompletedCount();
 
             if(lastCount != null && !completed.equals(lastCount)) {
@@ -80,11 +93,11 @@ public class RankingService {
 
         List<StudyRankDto> result = new ArrayList<>();
 
-        for(MemberRankingDto dto : rankings) {
+        for(MemberRankingDto dto : sortedRankings) {
             Long memberId = dto.getMemberId();
             int rank = memberIdToRanking.get(memberId);
 
-            int rankLevel = allZero ? 4 : getNumerickRankLevel(rank);
+            int rankLevel = allZero ? 4 : (rank >= 4 ? 4 : rank);
 
             StudyMember studyMember = studyMemberRepository.findById(memberId)
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 멤버 ID: " + memberId));
@@ -98,7 +111,13 @@ public class RankingService {
                     .rankLevel(rankLevel)
                     .build();
 
-            studyRankingRepository.save(studyRanking);
+            try{
+                studyRankingRepository.save(studyRanking);
+            } catch(DataIntegrityViolationException e) {
+                log.error("중복 저장 시도: memberId = {}, weeklyPeriodId = {}, studyGroupId = {}",
+                        memberId,weeklyPeriod.getId(),studyGroupId,e);
+                throw e;
+            }
 
             StudyRankDto rankDto = StudyRankDto.builder()
                     .id(studyRanking.getId())
@@ -129,7 +148,4 @@ public class RankingService {
         return studyRankingRepository.findRankingDtos(weeklyPeriod.getId(),studyGroupId);
     }
 
-    private int getNumerickRankLevel(int ranking) {
-        return ranking >= 4 ? 4: ranking;
-    }
 }
