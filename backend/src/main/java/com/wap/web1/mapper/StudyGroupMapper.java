@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class StudyGroupMapper {
 
-    public static StudyGroupResponse convertToResponseWithCountDto(
+    public static StudyGroupResponse<StudyGroupWithMemberCountDto> convertToResponseWithCountDto(
             List<StudyGroupWithMemberCountDto> groups, int size) {
 
         ScrollPaginationCollection<StudyGroupWithMemberCountDto> scroll =
