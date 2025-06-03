@@ -40,4 +40,8 @@ public class StudyMember {
     public enum Role {
         LEADER, MEMBER
     }
+
+    @Column(nullable = false)
+    private int AttendanceCount = 0;  // 기본값 0, 일주일치
+
 }

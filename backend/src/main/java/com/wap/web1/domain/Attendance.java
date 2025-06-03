@@ -20,11 +20,12 @@ public class Attendance {
     private Long id;
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "study_group_id", referencedColumnName = "study_group_id"),
-            @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    })
-    private StudyMember studyMember;
+    @JoinColumn(name = "study_group_id", nullable = false)
+    private StudyGroup studyGroup;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     private LocalDate date;
 

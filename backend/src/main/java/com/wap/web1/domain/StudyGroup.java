@@ -3,6 +3,7 @@ package com.wap.web1.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -45,4 +46,11 @@ public class StudyGroup {
     private Category category;
 
     private String type;
+
+    @Column
+    private LocalDate startDate;//스터디 시작일(모집마감일)
+
+    @Enumerated(EnumType.STRING)
+    private RecruitStatus recruitStatus;//모집중/모집마감
+
 }
